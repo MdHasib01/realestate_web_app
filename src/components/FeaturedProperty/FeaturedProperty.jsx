@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-
 import PropertyCard from "./PropertyCard";
 import {
   Carousel,
@@ -7,7 +7,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../ui/carousel";
+} from "../ui/featuredCarousel";
+import Autoplay from "embla-carousel-autoplay";
 const FeaturedProperty = () => {
   return (
     <div className="container px-6 mx-auto md:px-32 mt-20 ">
@@ -17,7 +18,14 @@ const FeaturedProperty = () => {
         Check out some of our latest properties.
       </p>
 
-      <Carousel>
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 5000,
+            stopOnInteraction: false,
+          }),
+        ]}
+      >
         <CarouselContent>
           {[1, 2, 3, 4, 5, 6, 7].map((item) => (
             <CarouselItem className="md:basis-1/3" key={item}>
