@@ -22,7 +22,7 @@ export const metadata = {
     images: [
       {
         url: "./assets/image/banner.jpg",
-        width: 1200,
+        width: 800,
         height: 630,
         alt: "HouseBiz - Buy and sell your property",
       },
