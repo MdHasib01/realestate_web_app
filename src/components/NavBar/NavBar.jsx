@@ -27,7 +27,7 @@ const NavBar = () => {
   const liClass =
     "uppercase hover:font-bold hover:text-blue-500 hover:border-b-2 hover:border-blue-500 hover:pb-1 duration-100";
   return (
-    <div className="container px-4 mx-auto md:px-32">
+    <div className="container px-4 mx-auto lg:px-32">
       <div className="flex justify-between items-center mt-4 border-b pb-2 ">
         <div className="block md:hidden">
           <CiMenuFries
@@ -65,7 +65,7 @@ const NavBar = () => {
       </div>
       <div
         className={`${
-          navBarOpen ? "left-0" : "left-[-500px]"
+          navBarOpen ? "left-0" : "left-[-800px]"
         } h-screen  shadow-2xl  z-50 fixed md:hidden p-4 top-0 bg-zinc-50 text-zinc-900 duration-500 sm:w-full w-2/3`}
       >
         <IoMdClose

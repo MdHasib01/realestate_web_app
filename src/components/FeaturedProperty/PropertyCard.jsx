@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../app/assets/image/banner.jpg";
+import image from "../../app/assets/image/luxury-homes1.jpg";
 import Image from "next/image";
 import { GrExpand } from "react-icons/gr";
 import { IoBedOutline } from "react-icons/io5";
