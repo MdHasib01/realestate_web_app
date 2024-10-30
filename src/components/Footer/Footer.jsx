@@ -9,49 +9,13 @@ import { Button } from "../ui/button";
 import { Damion } from "@next/font/google";
 import Image from "next/image";
 import logo from "../../app/assets/image/logo.png";
-import { FaFacebook } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaSquareInstagram } from "react-icons/fa6";
 import { version } from "../../../package.json";
-const discoverPlaces = [
-  {
-    name: "New York",
-    path: "/new_york",
-  },
-  {
-    name: "Los Angeles",
-    path: "/los_angeles",
-  },
-  {
-    name: "Chicago",
-    path: "/chicago",
-  },
-  {
-    name: "Houston",
-    path: "/houston",
-  },
-];
+import { discoverPlaces, socialLinks } from "./utils";
 const damion = Damion({
   subsets: ["latin"],
   weight: "400",
 });
-const socialLinks = [
-  {
-    name: "Facebook",
-    Icon: <FaFacebook />,
-    path: "/facebook",
-  },
-  {
-    name: "Twitter",
-    Icon: <FaXTwitter />,
-    path: "/twitter",
-  },
-  {
-    name: "Instagram",
-    Icon: <FaSquareInstagram />,
-    path: "/instagram",
-  },
-];
+
 const Footer = () => {
   return (
     <div className="w-full bg-[#004274] text-white">

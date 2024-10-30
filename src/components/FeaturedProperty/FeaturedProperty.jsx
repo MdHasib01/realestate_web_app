@@ -19,21 +19,11 @@ const FeaturedProperty = () => {
 
       <Carousel>
         <CarouselContent>
-          <CarouselItem className="md:basis-1/3">
-            <PropertyCard />
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/3">
-            <PropertyCard />
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/3">
-            <PropertyCard />
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/3">
-            <PropertyCard />
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/3">
-            <PropertyCard />
-          </CarouselItem>
+          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+            <CarouselItem className="md:basis-1/3" key={item}>
+              <PropertyCard />
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <div className="flex gap-2 items-center justify-end mt-6">
           <CarouselPrevious />
