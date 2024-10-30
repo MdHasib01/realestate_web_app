@@ -35,7 +35,7 @@ const tooltip = [
     icon: <FiPlusCircle />,
   },
 ];
-const FeaturedPropertyCard = () => {
+const PropertyCard = () => {
   return (
     <div className="bg-white rounded-lg drop-shadow-xl relative">
       <div className="h-[280px] overflow-hidden rounded-t-lg relative">
@@ -104,4 +104,4 @@ const FeaturedPropertyCard = () => {
   );
 };
 
-export default FeaturedPropertyCard;
+export default PropertyCard;
