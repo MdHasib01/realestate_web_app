@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import Link from "next/link";
 
 const tooltip = [
   {
@@ -40,7 +41,7 @@ const PropertyCard = () => {
     <div className="bg-white rounded-lg drop-shadow-xl relative">
       <div className="h-[280px] overflow-hidden rounded-t-lg relative">
         <Image
-          className="bg-gray-500 h-[280px] object-cover rounded-t-lg hover:scale-105 ease-in-out duration-500"
+          className="bg-gray-500 h-[280px] object-cover w-full rounded-t-lg hover:scale-105 ease-in-out duration-500"
           src={image}
         ></Image>
         <div className="absolute bottom-2 right-2 flex gap-2">
@@ -65,7 +66,11 @@ const PropertyCard = () => {
         For Rent
       </div>
       <div className="p-4">
-        <h2 className="text-xl font-bold">Spacious Apartment</h2>
+        <Link href="/property/Spacious Apartment">
+          <h2 className="text-xl hover:text-blue-500 duration-300 font-bold">
+            Spacious Apartment
+          </h2>
+        </Link>
         <p className="text-blue-500 underline cursor-pointer my-2 flex items-center gap-2">
           <FaLocationDot className="text-blue-500" />
           435 Southwest 12th Avenue, Miami, FL

@@ -36,12 +36,19 @@ const NavBar = () => {
             size={30}
           />
         </div>
-        <div className="logo flex items-center">
-          <Image width={100} className="w-[40px]" src={logo} alt="logo"></Image>
-          <h1 className={`${damion.className} text-3xl ml-1 text-blue-500`}>
-            HouseBiz
-          </h1>
-        </div>
+        <Link href={"/"}>
+          <div className="logo flex items-center">
+            <Image
+              width={100}
+              className="w-[40px]"
+              src={logo}
+              alt="logo"
+            ></Image>
+            <h1 className={`${damion.className} text-3xl ml-1 text-blue-500`}>
+              HouseBiz
+            </h1>
+          </div>
+        </Link>
         <div className="menu flex items-center gap-4">
           <ul className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => (
