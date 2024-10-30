@@ -55,7 +55,7 @@ const socialLinks = [
 const Footer = () => {
   return (
     <div className="w-full bg-[#004274] text-white">
-      <div className="container mx-auto md:px-32 px-12 pt-12 pb-4 grid grid-cols-1 md:grid-cols-4">
+      <div className="container mx-auto md:px-32 px-8 pt-12 pb-4 grid grid-cols-1 md:grid-cols-4">
         <div className="mb-6">
           <h1 className="mb-6">Discover</h1>
           <ul>
@@ -84,7 +84,7 @@ const Footer = () => {
             <AiOutlineMail /> 123 Main Street, Anytown, USA
           </p>
         </div>
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <h1 className="mb-6">Newsletter</h1>
           <div className="grid grid-cols-3 gap-4">
             <Input
@@ -101,7 +101,7 @@ const Footer = () => {
       </div>
 
       <div className="w-full bg-[#00335A]">
-        <div className="container mx-auto md:px-32 px-12 py-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="container mx-auto md:px-32 px-8 py-8 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="flex items-center justify-center md:justify-start gap-4">
             {socialLinks.map((link) => (
               <Link href={link.path} key={link.name} className="text-xl">
