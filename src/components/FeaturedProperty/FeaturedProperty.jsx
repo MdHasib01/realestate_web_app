@@ -1,6 +1,13 @@
 import React from "react";
 
 import FeaturedPropertyCard from "./FeaturedPropertyCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 const FeaturedProperty = () => {
   return (
     <div className="container px-2 mx-auto md:px-32 mt-20 ">
@@ -10,11 +17,29 @@ const FeaturedProperty = () => {
         Check out some of our latest properties.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-12 mb-20">
-        <FeaturedPropertyCard />
-        <FeaturedPropertyCard />
-        <FeaturedPropertyCard />
-      </div>
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem className="md:basis-1/3">
+            <FeaturedPropertyCard />
+          </CarouselItem>
+          <CarouselItem className="md:basis-1/3">
+            <FeaturedPropertyCard />
+          </CarouselItem>
+          <CarouselItem className="md:basis-1/3">
+            <FeaturedPropertyCard />
+          </CarouselItem>
+          <CarouselItem className="md:basis-1/3">
+            <FeaturedPropertyCard />
+          </CarouselItem>
+          <CarouselItem className="md:basis-1/3">
+            <FeaturedPropertyCard />
+          </CarouselItem>
+        </CarouselContent>
+        <div className="flex gap-2 items-center justify-end mt-6">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
+      </Carousel>
     </div>
   );
 };
