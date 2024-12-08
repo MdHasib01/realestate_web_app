@@ -24,7 +24,8 @@ const Banner = () => {
           </Reveal>
 
           <div className="text-xl text-center text-white">
-            Houzez is an innovative real estate WordPress theme.
+            Houzez is an innovative real estate web application that provides a
+            user-friendly platform for buying, selling, and renting properties.
           </div>
         </div>
       </div>

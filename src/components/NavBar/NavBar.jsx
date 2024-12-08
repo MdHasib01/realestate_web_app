@@ -9,6 +9,17 @@ import { CiMenuFries } from "react-icons/ci";
 import { useState } from "react";
 import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
+import { BsPersonCircle } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+import { MdSpaceDashboard } from "react-icons/md";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
 const damion = Damion({
   subsets: ["latin"],
@@ -61,12 +72,33 @@ const NavBar = () => {
                 <Link href={link.path}>{link.name}</Link>
               </li>
             ))}
-
-            <li>
-              <button className="rounded-full border-2 p-1">MD</button>
-            </li>
           </ul>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="rounded-full border-2 p-1">MD</button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-36 z-50 bg-zinc-100 rounded p-2">
+              <DropdownMenuLabel className="px-2">My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
+                <Link href="/profile" className="flex gap-1 items-center">
+                  <BsPersonCircle className="text-lg" />
+                  <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex gap-1 items-center px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
+                <Link href="/dashboard" className="flex gap-1 items-center">
+                  <MdSpaceDashboard className="text-lg" />
+                  <span>Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
 
+              <DropdownMenuItem className="flex gap-1 items-center p-2 uppercase text-sm bg-blue-500">
+                <FiLogOut className="text-lg text-white " />
+                <span className="text-white font-bold">Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button className="uppercase text-sm bg-blue-500">Login</Button>
         </div>
       </div>
