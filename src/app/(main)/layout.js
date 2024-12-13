@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import "./globals.css";
+import "../globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 
 import { Damion, Roboto } from "@next/font/google";
