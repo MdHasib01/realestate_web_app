@@ -43,6 +43,7 @@ const PropertyCard = () => {
         <Image
           className="bg-gray-500 h-[280px] object-cover w-full rounded-t-lg hover:scale-105 ease-in-out duration-500"
           src={image}
+          alt="home"
         ></Image>
         <div className="absolute bottom-2 right-2 flex gap-2">
           {tooltip.map((item) => (

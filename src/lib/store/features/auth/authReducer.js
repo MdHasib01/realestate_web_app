@@ -1,8 +1,15 @@
+"use client";
 import { createSlice } from "@reduxjs/toolkit";
-import { login, fetchCurrentUser } from "./authThunks";
+import { login, fetchCurrentUser, fetchCurrentUserLocal } from "./authThunks";
 
-const storedUser = JSON.parse(localStorage.getItem("user")) || null;
-const storedToken = localStorage.getItem("accessToken") || null;
+const storedUser =
+  typeof window === "undefined"
+    ? null
+    : JSON.parse(window.localStorage.getItem("user"));
+const storedToken =
+  typeof window === "undefined"
+    ? null
+    : window.localStorage.getItem("accessToken");
 
 const initialState = {
   user: null,
@@ -18,8 +25,15 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-      localStorage.removeItem("user");
-      localStorage.removeItem("accessToken");
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem("user");
+        window.localStorage.removeItem("accessToken");
+      }
+    },
+    getUser: (state, action) => {
+      console.log("getUser------------", action.payload);
+      state.isLoading = false;
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -32,9 +46,17 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.accessToken = action.payload.accessTokenc;
-        localStorage.setItem("user", JSON.stringify(action.payload.user)); // Save user to localStorage
-        localStorage.setItem("accessToken", action.payload.accessToken); // Save token to localStorage
+        state.accessToken = action.payload.accessToken;
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(
+            "user",
+            JSON.stringify(action.payload.user)
+          );
+          window.localStorage.setItem(
+            "accessToken",
+            action.payload.accessToken
+          );
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

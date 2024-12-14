@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }) {
       {/* <AppSidebar /> */}
       <main className="flex">
         {children}
-        <SidebarTrigger />
+        <SidebarTrigger className="md:hidden border p-2 m-2" />
       </main>
     </SidebarProvider>
   );

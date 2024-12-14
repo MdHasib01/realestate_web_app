@@ -25,9 +25,13 @@ const Brand = () => {
           ]}
         >
           <CarouselContent>
-            {brands.map((brand) => (
-              <CarouselItem className="basis-1/2 md:basis-1/5">
-                <Image src={brand.image} key={brand.name}></Image>
+            {brands.map((brand, index) => (
+              <CarouselItem key={index} className="basis-1/2 md:basis-1/5">
+                <Image
+                  src={brand.image}
+                  key={brand.name}
+                  alt={brand.name}
+                ></Image>
               </CarouselItem>
             ))}
           </CarouselContent>

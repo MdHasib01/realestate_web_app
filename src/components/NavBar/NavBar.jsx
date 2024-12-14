@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentUser } from "@/lib/store/features/auth/authThunks";
 import { logout } from "@/lib/store/features/auth/authReducer";
+import { getUser } from "@/lib/store/features/auth/authSlice";
 
 const damion = Damion({
   subsets: ["latin"],
@@ -36,8 +37,14 @@ const navLinks = [
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.auth);
-
+  console.log("user--", user);
   useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      console.log("user", JSON.parse(user));
+      dispatch(getUser(JSON.parse(user)));
+    }
+
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
@@ -46,7 +53,6 @@ const NavBar = () => {
   };
   const [navBarOpen, setNavBarOpen] = useState(false);
   const path = usePathname();
-  console.log("path", path);
   const activeClass = "font-bold text-blue-500 border-b-2 border-blue-500 pb-1";
   const liClass =
     "uppercase hover:font-bold hover:text-blue-500 hover:border-b-2 hover:border-blue-500 hover:pb-1 duration-100";
@@ -126,9 +132,15 @@ const NavBar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
+
           {!user && (
             <Link href="/login">
-              <Button className="uppercase text-sm bg-blue-500">Login</Button>
+              <Button
+                disabled={isLoading}
+                className="uppercase text-sm bg-blue-500"
+              >
+                {isLoading ? "Loading..." : "Login"}
+              </Button>
             </Link>
           )}
         </div>

@@ -1,6 +1,10 @@
+"use client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const accessToken = localStorage.getItem("accessToken") || "";
+const accessToken =
+  typeof window !== "undefined"
+    ? window.localStorage.getItem("accessToken")
+    : "";
 // Login thunk
 export const login = createAsyncThunk(
   "auth/login",

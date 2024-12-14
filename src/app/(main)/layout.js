@@ -34,12 +34,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
- 
-      <body className={`${roboto.className} antialiased bg-blue-50`}>
-        <NavBar />
-        {children}
-        <Footer />
-      </body>
-  
+    <>
+      <NavBar />
+      {children}
+      <Footer />
+    </>
   );
 }

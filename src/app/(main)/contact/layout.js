@@ -4,9 +4,5 @@ export const metadata = {
   title: "Contact us - HouseBiz",
 };
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <main>{children}</main>
-    </html>
-  );
+  return <main>{children}</main>;
 }
