@@ -14,9 +14,30 @@ export const login = createAsyncThunk(
         `http://localhost:8000/api/v1/users/login`,
         credentials
       );
-
+      toast.success("Login successful!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       return response.data.data; // Expected: { user, token }
     } catch (error) {
+      toast.error("Login failed!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       return rejectWithValue(error.response?.data || "Login failed");
     }
   }
@@ -33,6 +54,7 @@ export const fetchCurrentUser = createAsyncThunk(
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
+
       return response.data.data; // Expected: { user }
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch failed");

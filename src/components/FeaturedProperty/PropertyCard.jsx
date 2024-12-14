@@ -38,7 +38,7 @@ const tooltip = [
 ];
 const PropertyCard = () => {
   return (
-    <div className="bg-white rounded-lg drop-shadow-xl relative">
+    <div className="bg-white rounded-lg border  relative">
       <div className="h-[280px] overflow-hidden rounded-t-lg relative">
         <Image
           className="bg-gray-500 h-[280px] object-cover w-full rounded-t-lg hover:scale-105 ease-in-out duration-500"
