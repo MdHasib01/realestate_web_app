@@ -1,9 +1,7 @@
-import localFont from "next/font/local";
-import "../globals.css";
-import NavBar from "@/components/NavBar/NavBar";
+import StoreProvider from "@/StoreProvider";
+import "./globals.css";
 
 import { Damion, Roboto } from "@next/font/google";
-import Footer from "@/components/Footer/Footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -34,12 +32,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
- 
+    <html lang="en">
       <body className={`${roboto.className} antialiased bg-blue-50`}>
-        <NavBar />
-        {children}
-        <Footer />
+        <StoreProvider>{children}</StoreProvider>
       </body>
-  
+    </html>
   );
 }

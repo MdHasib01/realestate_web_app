@@ -6,7 +6,7 @@ import logo from "../../app/assets/image/logo.png";
 import Image from "next/image";
 import { Damion } from "@next/font/google";
 import { CiMenuFries } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
@@ -20,6 +20,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCurrentUser } from "@/lib/store/features/auth/authThunks";
+import { logout } from "@/lib/store/features/auth/authReducer";
 
 const damion = Damion({
   subsets: ["latin"],
@@ -31,6 +34,16 @@ const navLinks = [
   { name: "Contact", path: "/contact" },
 ];
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const { user, isLoading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   const [navBarOpen, setNavBarOpen] = useState(false);
   const path = usePathname();
   console.log("path", path);
@@ -73,33 +86,51 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="rounded-full border-2 p-1">MD</button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36 z-50 bg-zinc-100 rounded p-2">
-              <DropdownMenuLabel className="px-2">My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
-                <Link href="/profile" className="flex gap-1 items-center">
-                  <BsPersonCircle className="text-lg" />
-                  <span>Profile</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex gap-1 items-center px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
-                <Link href="/dashboard" className="flex gap-1 items-center">
-                  <MdSpaceDashboard className="text-lg" />
-                  <span>Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="rounded-full border-2 p-1">
+                  <img
+                    width={40}
+                    className="rounded-full w-8 h-8"
+                    src={user?.avatar}
+                    alt=""
+                  />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-36 z-50 bg-zinc-100 rounded p-2">
+                <DropdownMenuLabel className="px-2">
+                  My Account
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
+                  <Link href="/profile" className="flex gap-1 items-center">
+                    <BsPersonCircle className="text-lg" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex gap-1 items-center px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
+                  <Link href="/dashboard" className="flex gap-1 items-center">
+                    <MdSpaceDashboard className="text-lg" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
 
-              <DropdownMenuItem className="flex gap-1 items-center p-2 uppercase text-sm bg-blue-500">
-                <FiLogOut className="text-lg text-white " />
-                <span className="text-white font-bold">Logout</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button className="uppercase text-sm bg-blue-500">Login</Button>
+                <DropdownMenuItem
+                  className="flex gap-1 items-center p-2 uppercase text-sm bg-blue-500 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  <FiLogOut className="text-lg text-white " />
+                  <span className="text-white font-bold">Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          {!user && (
+            <Link href="/login">
+              <Button className="uppercase text-sm bg-blue-500">Login</Button>
+            </Link>
+          )}
         </div>
       </div>
       <div
