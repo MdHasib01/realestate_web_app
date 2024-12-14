@@ -1,6 +1,7 @@
 "use client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 const accessToken =
   typeof window !== "undefined"
     ? window.localStorage.getItem("accessToken")
@@ -14,17 +15,8 @@ export const login = createAsyncThunk(
         `http://localhost:8000/api/v1/users/login`,
         credentials
       );
-      toast.success("Login successful!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+
+      console.log("login response", response);
       return response.data.data; // Expected: { user, token }
     } catch (error) {
       toast.error("Login failed!", {
