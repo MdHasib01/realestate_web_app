@@ -12,7 +12,7 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.SERVER_URL}/users/login`,
+        `https://housebizz-server.vercel.app/api/v1/users/login`,
         credentials
       );
 
@@ -31,7 +31,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/v1/users/current-user`,
+        `https://housebizz-server.vercel.app/api/v1/users/current-user`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
