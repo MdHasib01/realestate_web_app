@@ -41,11 +41,6 @@ export const fetchCurrentUser = createAsyncThunk(
 
       return response.data.data; // Expected: { user }
     } catch (error) {
-      if (typeof window !== "undefined") {
-        window.localStorage.removeItem("user");
-        window.localStorage.removeItem("accessToken");
-      }
-
       const homeUrl = new URL("/", request.url);
       NextResponse.redirect(homeUrl);
       return rejectWithValue(error.response?.data || "Fetch failed");
