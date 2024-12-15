@@ -1,6 +1,7 @@
 "use client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { NextResponse } from "next/server";
 import { toast } from "react-toastify";
 const accessToken =
   typeof window !== "undefined"
@@ -40,6 +41,13 @@ export const fetchCurrentUser = createAsyncThunk(
 
       return response.data.data; // Expected: { user }
     } catch (error) {
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem("user");
+        window.localStorage.removeItem("accessToken");
+      }
+
+      const homeUrl = new URL("/", request.url);
+      NextResponse.redirect(homeUrl);
       return rejectWithValue(error.response?.data || "Fetch failed");
     }
   }
