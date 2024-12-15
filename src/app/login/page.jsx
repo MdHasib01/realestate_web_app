@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 const Login = () => {
   return (
     <div>
-      <Button>Login</Button>
       <LoginContainer />
     </div>
   );
