@@ -1,7 +1,8 @@
 "use client";
 import { createSlice } from "@reduxjs/toolkit";
 import { login, fetchCurrentUser, fetchCurrentUserLocal } from "./authThunks";
-
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 const storedUser =
   typeof window === "undefined"
     ? null
@@ -29,6 +30,8 @@ const authSlice = createSlice({
         window.localStorage.removeItem("user");
         window.localStorage.removeItem("accessToken");
       }
+      Cookies.remove("accessToken");
+      toast.success("Login successful!");
     },
     getUser: (state, action) => {
       console.log("getUser------------", action.payload);
@@ -57,6 +60,9 @@ const authSlice = createSlice({
             action.payload.accessToken
           );
         }
+        Cookies.set("accessToken", JSON.stringify(action.payload.accessToken), {
+          expires: 7,
+        });
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

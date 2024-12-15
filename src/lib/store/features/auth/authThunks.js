@@ -16,20 +16,10 @@ export const login = createAsyncThunk(
         credentials
       );
 
-      console.log("login response", response);
+      toast.success("Logged out successfully!");
       return response.data.data; // Expected: { user, token }
     } catch (error) {
-      toast.error("Login failed!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error("Login failed!");
       return rejectWithValue(error.response?.data || "Login failed");
     }
   }

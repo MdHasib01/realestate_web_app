@@ -5,10 +5,9 @@ export default async function DashboardLayout({ children }) {
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      {/* <AppSidebar /> */}
       <main className="flex">
         {children}
-        <SidebarTrigger className="md:hidden border p-2 m-2" />
+        <SidebarTrigger className=" border p-2 m-2" />
       </main>
     </SidebarProvider>
   );

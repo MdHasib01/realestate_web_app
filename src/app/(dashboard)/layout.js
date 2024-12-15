@@ -6,9 +6,5 @@ const roboto = Roboto({
   style: ["normal", "italic"],
 });
 export default function RootLayout({ children }) {
-  return (
-    <body className={`${roboto.className} antialiased bg-blue-50`}>
-      {children}
-    </body>
-  );
+  return <>{children}</>;
 }
