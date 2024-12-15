@@ -12,7 +12,7 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/v1/users/login`,
+        `${process.env.SERVER_URL}/users/login`,
         credentials
       );
 
