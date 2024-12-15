@@ -7,12 +7,13 @@ const accessToken =
     ? window.localStorage.getItem("accessToken")
     : "";
 // Login thunk
+console.log("env", process.env.NEXT_PUBLIC_SERVER_URL);
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://housebizz-server.vercel.app/api/v1/users/login`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/login`,
         credentials
       );
 
@@ -31,7 +32,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://housebizz-server.vercel.app/api/v1/users/current-user`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/current-user`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
