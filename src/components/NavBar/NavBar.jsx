@@ -95,13 +95,12 @@ const NavBar = () => {
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="rounded-full border-2 p-1">
+                <button className="rounded-full border-2">
                   {user?.avatar ? (
-                    <Image
-                      width={40}
+                    <img
                       className="rounded-full w-8 h-8"
                       src={user?.avatar}
-                      alt=""
+                      alt="profile picture"
                     />
                   ) : (
                     <RxAvatar className="rounded-full w-8 h-8" />
