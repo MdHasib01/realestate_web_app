@@ -12,6 +12,7 @@ import { IoMdClose } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { MdSpaceDashboard } from "react-icons/md";
+import { RxAvatar } from "react-icons/rx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentUser } from "@/lib/store/features/auth/authThunks";
-import { logout } from "@/lib/store/features/auth/authReducer";
+import { logout } from "@/lib/store/features/auth/authSlice";
 import { getUser } from "@/lib/store/features/auth/authSlice";
 
 const damion = Damion({
@@ -41,7 +42,6 @@ const NavBar = () => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      console.log("user", JSON.parse(user));
       dispatch(getUser(JSON.parse(user)));
     }
 
@@ -96,12 +96,16 @@ const NavBar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="rounded-full border-2 p-1">
-                  <img
-                    width={40}
-                    className="rounded-full w-8 h-8"
-                    src={user?.avatar}
-                    alt=""
-                  />
+                  {user?.avatar ? (
+                    <Image
+                      width={40}
+                      className="rounded-full w-8 h-8"
+                      src={user?.avatar}
+                      alt=""
+                    />
+                  ) : (
+                    <RxAvatar className="rounded-full w-8 h-8" />
+                  )}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-36 z-50 bg-zinc-100 rounded p-2">

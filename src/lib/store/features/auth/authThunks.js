@@ -8,7 +8,6 @@ const accessToken =
     ? window.localStorage.getItem("accessToken")
     : "";
 // Login thunk
-console.log("env", process.env.NEXT_PUBLIC_SERVER_URL);
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
@@ -18,11 +17,30 @@ export const login = createAsyncThunk(
         credentials
       );
 
-      toast.success("Logged out successfully!");
+      toast.success("Logged in successfully!");
       return response.data.data; // Expected: { user, token }
     } catch (error) {
       toast.error("Login failed!");
       return rejectWithValue(error.response?.data || "Login failed");
+    }
+  }
+);
+
+// Register thunk
+export const register = createAsyncThunk(
+  "auth/register",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/register`,
+        credentials
+      );
+
+      toast.success("User Registered successfully!");
+      return response.data.data; // Expected: { user, token }
+    } catch (error) {
+      toast.error("Registration failed!");
+      return rejectWithValue(error.response?.data || "Registration failed");
     }
   }
 );
