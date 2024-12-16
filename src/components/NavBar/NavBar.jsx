@@ -38,7 +38,6 @@ const navLinks = [
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.auth);
-  console.log("user--", user);
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -113,7 +112,10 @@ const NavBar = () => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="px-2 py-1  bg-zinc-200 hover:bg-zinc-300">
-                  <Link href="/profile" className="flex gap-1 items-center">
+                  <Link
+                    href="/dashboard/profile"
+                    className="flex gap-1 items-center"
+                  >
                     <BsPersonCircle className="text-lg" />
                     <span>Profile</span>
                   </Link>
