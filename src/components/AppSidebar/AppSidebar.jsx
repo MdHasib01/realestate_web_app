@@ -25,8 +25,8 @@ const AppSidebar = () => {
       icon: IoMdHome,
     },
     {
-      title: "Calendar",
-      url: "#",
+      title: "Property",
+      url: "/dashboard/property",
       icon: IoMdHome,
     },
     {

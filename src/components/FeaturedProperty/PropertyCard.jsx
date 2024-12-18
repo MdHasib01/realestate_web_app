@@ -18,6 +18,8 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import Link from "next/link";
+import getRelativeTime from "../../../utils/getRelativeTime";
+import formatDate from "../../../utils/formatDate";
 
 const tooltip = [
   {
@@ -36,15 +38,16 @@ const tooltip = [
     icon: <FiPlusCircle />,
   },
 ];
-const PropertyCard = () => {
+
+const PropertyCard = ({ property }) => {
   return (
     <div className="bg-white rounded-lg border  relative">
       <div className="h-[280px] overflow-hidden rounded-t-lg relative">
-        <Image
+        <img
           className="bg-gray-500 h-[280px] object-cover w-full rounded-t-lg hover:scale-105 ease-in-out duration-500"
-          src={image}
+          src={property?.image[0]}
           alt="home"
-        ></Image>
+        ></img>
         <div className="absolute bottom-2 right-2 flex gap-2">
           {tooltip.map((item) => (
             <TooltipProvider key={item.id}>
@@ -69,41 +72,64 @@ const PropertyCard = () => {
       <div className="p-4">
         <Link href="/property/Spacious Apartment">
           <h2 className="text-xl hover:text-blue-500 duration-300 font-bold">
-            Spacious Apartment
+            {property.title}
           </h2>
         </Link>
-        <p className="text-blue-500 underline cursor-pointer my-2 flex items-center gap-2">
-          <FaLocationDot className="text-blue-500" />
-          435 Southwest 12th Avenue, Miami, FL
-        </p>
-        <p className="text-sm text-gray-500">
-          <span className="text-black">Added:</span> June 13, 2020
-        </p>
+        {property?.location && (
+          <p className="text-blue-500 underline cursor-pointer my-2 flex items-center gap-2">
+            <FaLocationDot className="text-blue-500" />
+            {property?.location}, {property?.city}, {property?.divission}
+          </p>
+        )}
+        {property?.createdAt && (
+          <p className="text-sm text-gray-500 flex">
+            <span className="text-black">Added:</span>
+            <p>{formatDate(property?.createdAt)}</p>
+          </p>
+        )}
         <div className="flex items-center gap-4 my-2 text-sm">
-          <div className="flex items-center gap-1 ">
-            <IoBedOutline className="text-xl" /> 3
-          </div>
-          <div className="flex items-center gap-1 text-sm">
-            <FaShower className="text-xl" /> 3
-          </div>
-          <div className="flex items-center gap-1 text-sm">
-            <FaCar className="text-xl" /> 1
-          </div>
-          <div className="flex items-center gap-1 text-sm">
-            <TbRulerMeasure className="text-xl" /> 2400 Sq Ft
-          </div>
+          {property?.bedrooms && (
+            <div className="flex items-center gap-1 ">
+              <IoBedOutline className="text-xl" /> {property?.bedrooms}
+            </div>
+          )}
+          {property?.bathrooms && (
+            <div className="flex items-center gap-1 text-sm">
+              <FaShower className="text-xl" /> {property?.bathrooms}
+            </div>
+          )}
+          {property?.garage && (
+            <div className="flex items-center gap-1 text-sm">
+              <FaCar className="text-xl" /> {property?.garage}
+            </div>
+          )}
+          {property?.size && (
+            <div className="flex items-center gap-1 text-sm">
+              <TbRulerMeasure className="text-xl" /> {property?.size} Sq Ft
+            </div>
+          )}
         </div>
         <p className="text-xs uppercase ">APARTMENT</p>
       </div>
       <hr />
       <div className="flex justify-between text-gray-700 items-center p-4">
-        <div className="flex items-center gap-1 text-sm">
-          <CgProfile className="text-xl" />
-          <p>Mike Taison</p>
-        </div>
+        {property?.ownerDetails && (
+          <div className="flex items-center gap-2 text-sm">
+            {property?.ownerDetails?.avatar ? (
+              <img
+                src={property?.ownerDetails?.avatar}
+                className="w-8 h-8 rounded rounded-full p-1 border"
+                alt="profile"
+              />
+            ) : (
+              <CgProfile className="text-xl" />
+            )}
+            <p>{property?.ownerDetails?.fullName}</p>
+          </div>
+        )}
         <div className="flex items-center gap-1 text-sm">
           <ImAttachment className="text-xl" />
-          <p>1 Month Ago</p>
+          <p>{getRelativeTime(property?.createdAt || new Date())}</p>
         </div>
       </div>
     </div>
