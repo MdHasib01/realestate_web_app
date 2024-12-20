@@ -1,19 +1,27 @@
-"use client";
 import AddProperty from "@/components/AddProperty/AddProperty";
 import { getAllProperty } from "@/lib/store/features/property/propertyThunks";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
-const Page = () => {
-  const { properties, isLoading } = useSelector((state) => state.property);
-  console.log(properties);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllProperty());
-  }, [dispatch]);
+async function getData() {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    // ...
+  ];
+}
+const Page = async () => {
+  const data = await getData();
+
   return (
-    <div>
-      <AddProperty />
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
     </div>
   );
 };
