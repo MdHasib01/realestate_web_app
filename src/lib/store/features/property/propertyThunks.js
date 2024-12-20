@@ -13,7 +13,7 @@ export const getAllProperty = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/properties/getAllProperties`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/properties/`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }

@@ -40,21 +40,25 @@ const shareIcon = [
     icon: <AiOutlineShareAlt />,
   },
 ];
-const PropertyDesctiption = () => {
+const PropertyDesctiption = ({ property }) => {
   return (
     <div>
       <Image
-        src={image}
+        src={property?.image[0]}
         className="w-full h-[400px] object-cover mt-2"
         alt="home"
+        width={800}
+        height={600}
       />
       <div className=" w-full overflow-hidden flex gap-1 mt-1">
         {[1, 2, 3, 4, 5, 6].map((item) => (
           <Image
-            src={image}
+            src={property?.image[0]}
             key={item}
             className="w-1/6  object-cover"
             alt="home"
+            width={100}
+            height={100}
           ></Image>
         ))}
       </div>
@@ -86,17 +90,27 @@ const PropertyDesctiption = () => {
           <div className="bg-green-500 text-white rounded uppercase text-xs px-2 py-1">
             Featured
           </div>
-          <div className="bg-gray-500 text-white rounded uppercase text-xs px-2 py-1">
-            For Sale
-          </div>
+          {property?.status && (
+            <div className="bg-gray-500 text-white rounded uppercase text-xs px-2 py-1">
+              For {property?.status}
+            </div>
+          )}
         </div>
-        <h2 className="text-2xl  ">Equstrian Villa</h2>
+        <h2 className="text-2xl  ">{property?.title}</h2>
         <div className="flex items-center text-gray-500">
           <CiLocationOn className="text-xl mt-1" />
-          <p>123 Main Street, Anytown, USA</p>
+          {property?.location && (
+            <p>
+              {property?.location}, {property?.city}, {property?.divission}
+            </p>
+          )}
         </div>
-        <h2 className="text-2xl mt-4 mb-1 font-bold">$ 1,500,000</h2>
-        <p className="text-gray-500 text-lg ">$ 15,000/sq ft</p>
+        {property?.price && (
+          <h2 className="text-2xl mt-4 mb-1 font-bold">$ {property?.price}</h2>
+        )}
+        {property?.size && (
+          <p className="text-gray-500 text-lg ">$ {property?.size}/sq ft</p>
+        )}
       </div>
 
       {/* Overview */}
@@ -111,36 +125,51 @@ const PropertyDesctiption = () => {
         <hr />
         <div className="grid grid-cols-2 lg:grid-cols-6 items-center gap-4 my-6 text-sm">
           <div>
-            <p>Villa</p>
+            {property?.appartmentType && (
+              <p>
+                {property?.appartmentType.charAt(0).toUpperCase() +
+                  property?.appartmentType.slice(1)}
+              </p>
+            )}
             <p className="text-gray-500">Property Type</p>
           </div>
-          <div>
-            <div className="flex items-center gap-1 ">
-              <IoBedOutline className="text-lg font-normal text-gray-500" /> 3
+          {property?.bedrooms && (
+            <div>
+              <div className="flex items-center gap-1 ">
+                <IoBedOutline className="text-lg font-normal text-gray-500" />{" "}
+                {property?.bedrooms}
+              </div>
+              <p className="text-gray-500">Bedrooms</p>
             </div>
-            <p className="text-gray-500">Property Type</p>
-          </div>
+          )}
 
-          <div>
-            <div className="flex items-center gap-1 ">
-              <FaShower className="text-lg font-normal text-gray-500" /> 3
+          {property?.bathrooms && (
+            <div>
+              <div className="flex items-center gap-1 ">
+                <FaShower className="text-lg font-normal text-gray-500" />{" "}
+                {property?.bathrooms}
+              </div>
+              <p className="text-gray-500">Bathrooms</p>
             </div>
-            <p className="text-gray-500">Bathrooms</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 ">
-              <IoCarSportOutline className="text-lg font-normal text-gray-500" />{" "}
-              1
+          )}
+          {property?.garage && (
+            <div>
+              <div className="flex items-center gap-1 ">
+                <IoCarSportOutline className="text-lg font-normal text-gray-500" />{" "}
+                {property?.garage}
+              </div>
+              <p className="text-gray-500">Garage</p>
             </div>
-            <p className="text-gray-500">Garage</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 ">
-              <TbRulerMeasure className="text-lg font-normal text-gray-500" />{" "}
-              1200
+          )}
+          {property?.size && (
+            <div>
+              <div className="flex items-center gap-1 ">
+                <TbRulerMeasure className="text-lg font-normal text-gray-500" />{" "}
+                {property?.size}
+              </div>
+              <p className="text-gray-500">Sq Ft</p>
             </div>
-            <p className="text-gray-500">Sq Ft</p>
-          </div>
+          )}
           <div>
             <div className="flex items-center gap-1 ">
               <IoCalendarOutline className="text-lg font-normal text-gray-500" />{" "}
@@ -156,36 +185,8 @@ const PropertyDesctiption = () => {
         </div>
         <hr />
         <div className="text-justify  gap-4 my-6 text-sm">
-          <p className="mb-4">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit
-            asperiores delectus ad deserunt, animi eum eveniet, praesentium,
-            adipisci veniam eos ullam voluptates iure! Blanditiis iusto
-            quibusdam numquam id dicta! Excepturi repudiandae voluptates
-            voluptatem qui eveniet laborum, voluptas ipsa praesentium. Commodi
-            at nihil alias recusandae, magnam illum nam quos doloremque,
-            repellendus quia, mollitia veritatis necessitatibus possimus
-            perspiciatis quo error consequuntur non veniam pariatur doloribus
-            quaerat quas? Blanditiis, nisi cumque necessitatibus adipisci labore
-            possimus nam facere ipsum culpa repudiandae cupiditate fugiat magni
-            voluptas distinctio asperiores atque ea odit veritatis, dolorem
-            sequi. Nesciunt deleniti tempore inventore mollitia asperiores minus
-            perferendis magnam consectetur repudiandae!
-          </p>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit
-            asperiores delectus ad deserunt, animi eum eveniet, praesentium,
-            adipisci veniam eos ullam voluptates iure! Blanditiis iusto
-            quibusdam numquam id dicta! Excepturi repudiandae voluptates
-            voluptatem qui eveniet laborum, voluptas ipsa praesentium. Commodi
-            at nihil alias recusandae, magnam illum nam quos doloremque,
-            repellendus quia, mollitia veritatis necessitatibus possimus
-            perspiciatis quo error consequuntur non veniam pariatur doloribus
-            quaerat quas? Blanditiis, nisi cumque necessitatibus adipisci labore
-            possimus nam facere ipsum culpa repudiandae cupiditate fugiat magni
-            voluptas distinctio asperiores atque ea odit veritatis, dolorem
-            sequi. Nesciunt deleniti tempore inventore mollitia asperiores minus
-            perferendis magnam consectetur repudiandae!
-          </p>
+          <p className="mb-4">{property?.description}</p>
+          <p>{property?.description}</p>
         </div>
       </div>
       <div className="mt-4 bg-white p-4 rounded-md">

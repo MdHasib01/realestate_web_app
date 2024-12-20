@@ -70,7 +70,7 @@ const PropertyCard = ({ property }) => {
         For Rent
       </div>
       <div className="p-4">
-        <Link href="/property/Spacious Apartment">
+        <Link href={`/property/${property?._id}`}>
           <h2 className="text-xl hover:text-blue-500 duration-300 font-bold">
             {property.title}
           </h2>

@@ -11,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
 import { GoHeart } from "react-icons/go";
+import Link from "next/link";
 const icons = [
   {
     name: "Favourite",
@@ -25,37 +26,43 @@ const icons = [
     icon: <BsPrinter />,
   },
 ];
-const TopDetails = () => {
+const TopDetails = ({ property }) => {
   return (
     <div className="md:flex  justify-between my-10">
       <div>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              <Link href="/">Home</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/property">Property</BreadcrumbLink>
+              <Link href="/property">Property</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Equstrian Villa</BreadcrumbPage>
+              <BreadcrumbPage>{property?.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h2 className="text-3xl mt-10 ">Equstrian Villa</h2>
+        <h2 className="text-3xl mt-10 ">{property?.title}</h2>
         <div className="flex gap-2 my-4">
           <div className="bg-green-500 text-white rounded uppercase text-xs px-2 py-1">
             Featured
           </div>
-          <div className="bg-gray-500 text-white rounded uppercase text-xs px-2 py-1">
-            For Sale
-          </div>
+          {property?.status && (
+            <div className="bg-gray-500 text-white rounded uppercase text-xs px-2 py-1">
+              For {property?.status}
+            </div>
+          )}
         </div>
         <div className="flex items-center text-gray-500">
           <CiLocationOn className="text-xl" />
-          <p>123 Main Street, Anytown, USA</p>
+          {property?.location && (
+            <p>
+              {property?.location}, {property?.city}, {property?.divission}
+            </p>
+          )}
         </div>
       </div>
       <div className="text-end">
@@ -69,8 +76,12 @@ const TopDetails = () => {
             </div>
           ))}
         </div>
-        <h2 className="text-3xl my-4 font-bold">$ 1,500,000</h2>
-        <p className="text-gray-500 text-lg ">$ 15,000/sq ft</p>
+        {property?.price && (
+          <h2 className="text-3xl my-4 font-bold">$ {property?.price}</h2>
+        )}
+        {property?.size && (
+          <p className="text-gray-500 text-lg ">$ {property?.size}/sq ft</p>
+        )}
       </div>
     </div>
   );
