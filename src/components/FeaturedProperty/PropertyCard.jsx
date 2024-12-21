@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import image from "../../app/assets/image/luxury-homes1.jpg";
 import Image from "next/image";
@@ -20,26 +21,17 @@ import {
 import Link from "next/link";
 import getRelativeTime from "../../../utils/getRelativeTime";
 import formatDate from "../../../utils/formatDate";
-
-const tooltip = [
-  {
-    id: 1,
-    title: "Preview",
-    icon: <GrExpand />,
-  },
-  {
-    id: 2,
-    title: "Favorite",
-    icon: <GoHeart />,
-  },
-  {
-    id: 3,
-    title: "Compare",
-    icon: <FiPlusCircle />,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "@/lib/store/features/favourites/favouritesSlice";
 
 const PropertyCard = ({ property }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const isFavorite = favorites.includes(property._id);
+  const handleClick = () => {
+    dispatch(toggleFavorite(property._id));
+  };
   return (
     <div className="bg-white rounded-lg border  relative">
       <div className="h-[280px] overflow-hidden rounded-t-lg relative">
@@ -49,18 +41,41 @@ const PropertyCard = ({ property }) => {
           alt="home"
         ></img>
         <div className="absolute bottom-2 right-2 flex gap-2">
-          {tooltip.map((item) => (
-            <TooltipProvider key={item.id}>
-              <Tooltip>
-                <TooltipTrigger className="bg-[#00000084] text-white rounded text-lg hover:bg-[#00000599] p-1">
-                  {item.icon}
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{item.title}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ))}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="bg-[#00000084] text-white rounded text-lg hover:bg-[#00000599] p-1">
+                <GrExpand />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Preview</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                onClick={handleClick}
+                className={`bg-[#00000084] ${
+                  isFavorite ? "text-red-500" : "text-white"
+                } rounded text-lg hover:bg-[#00000599] hover:text-red-500 p-1`}
+              >
+                <GoHeart />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Favorite</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="bg-[#00000084] text-white rounded text-lg hover:bg-[#00000599] p-1">
+                <FiPlusCircle />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Compare</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
       <div className="absolute top-2 left-2 bg-green-500 text-white rounded text-xs px-2 py-1">

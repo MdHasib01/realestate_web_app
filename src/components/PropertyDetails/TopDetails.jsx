@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPrinter } from "react-icons/bs";
@@ -12,21 +13,17 @@ import {
 } from "../ui/breadcrumb";
 import { GoHeart } from "react-icons/go";
 import Link from "next/link";
-const icons = [
-  {
-    name: "Favourite",
-    icon: <GoHeart />,
-  },
-  {
-    name: "Share",
-    icon: <AiOutlineShareAlt />,
-  },
-  {
-    name: "Print",
-    icon: <BsPrinter />,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "@/lib/store/features/favourites/favouritesSlice";
+
 const TopDetails = ({ property }) => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const isFavorite = favorites.includes(property._id);
+  const handleClick = () => {
+    dispatch(toggleFavorite(property._id));
+  };
   return (
     <div className="md:flex  justify-between my-10">
       <div>
@@ -67,14 +64,20 @@ const TopDetails = ({ property }) => {
       </div>
       <div className="text-end">
         <div className="flex gap-2 justify-end">
-          {icons.map((item) => (
-            <div
-              key={item.name}
-              className="bg-white hover:bg-black hover:text-white border border-black text-black rounded uppercase text-lg p-2  cursor-pointer"
-            >
-              {item.icon}
-            </div>
-          ))}
+          <div
+            onClick={handleClick}
+            className={`${isFavorite ? "text-red-500" : "text-black"} ${
+              isFavorite ? "bg-black" : "bg-white "
+            } hover:bg-black hover:text-red-500 border border-black  rounded uppercase text-lg p-2  cursor-pointer`}
+          >
+            <GoHeart />
+          </div>
+          <div className="bg-white hover:bg-black hover:text-white border border-black text-black rounded uppercase text-lg p-2  cursor-pointer">
+            <AiOutlineShareAlt />
+          </div>
+          <div className="bg-white hover:bg-black hover:text-white border border-black text-black rounded uppercase text-lg p-2  cursor-pointer">
+            <BsPrinter />
+          </div>
         </div>
         {property?.price && (
           <h2 className="text-3xl my-4 font-bold">$ {property?.price}</h2>
