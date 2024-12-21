@@ -29,7 +29,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <div className="mt-[-100px]">
+      <div className="mt-[-100px] max-w-6xl mx-auto">
         <SearchBanner />
       </div>
     </div>

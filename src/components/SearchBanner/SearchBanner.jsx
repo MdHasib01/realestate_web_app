@@ -6,7 +6,7 @@ import Reveal from "../ui/Motion/Reveal";
 const SearchBanner = () => {
   return (
     <>
-      <div className="bg-white-100 flex items-center justify-center mx-auto  rounded-md px-2 lg:px-32 drop-shadow">
+      <div className="bg-white-100 flex items-center justify-center mx-auto rounded-md px-2 lg:px-32 drop-shadow">
         <button className="bg-blue-500 bg-opacity-80 text-white px-4 py-2 font-bold hover:bg-blue-500 hover:bg-opacity-80 rounded-t-md hover:text-white mr-1">
           All Status
         </button>
