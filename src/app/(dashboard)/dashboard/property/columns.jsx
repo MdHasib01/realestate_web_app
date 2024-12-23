@@ -4,15 +4,44 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export const columns = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "title",
+    header: "Title",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "location",
+    header: "Location",
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "city",
+    header: "City",
+  },
+  {
+    accessorKey: "divission",
+    header: "Divission",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
+    accessorKey: "bedrooms",
+    header: "Bedrooms",
+  },
+  {
+    accessorKey: "bathrooms",
+    header: "Bathrooms",
+  },
+  { accessorKey: "garage", header: "Garage" },
+  {
+    accessorKey: "yearBuilt",
+    header: "Year Built",
+  },
+  {
+    accessorKey: "appartmentType",
+    header: "Appartment Type",
+  },
+  {
+    accessorKey: "porertyStatus",
+    header: "Porerty Status",
   },
 ];
