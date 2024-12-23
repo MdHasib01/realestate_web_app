@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 async function getData() {
   // Fetch data from your API here.
   return [
@@ -45,19 +46,20 @@ const Page = () => {
 
   return (
     <div className="h-full flex flex-col p-4">
-      <DataTable columns={columns} data={properties} className="flex-1" />
       <Dialog>
-        <DialogTrigger>Open</DialogTrigger>
+        <DialogTrigger>
+          <div className="flex justify-end">
+            <Button> Add Property</Button>
+          </div>
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
+            <DialogTitle>Add a new property</DialogTitle>
           </DialogHeader>
+          <AddProperty />
         </DialogContent>
       </Dialog>
+      <DataTable columns={columns} data={properties} className="flex-1" />
     </div>
   );
 };

@@ -48,7 +48,6 @@ export function DataTable({ columns, data }) {
           }
           className="max-w-sm mb-4"
         />
-        <Button> Add Property</Button>
       </div>
       <div className="rounded-md border">
         <Table>

@@ -4,6 +4,13 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export const columns = [
   {
+    accessorKey: "image",
+    header: "Image",
+    cell: (props) => (
+      <img src={props.getValue()} className="w-20 h-12   object-cover" />
+    ),
+  },
+  {
     accessorKey: "title",
     header: "Title",
   },
