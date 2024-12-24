@@ -7,6 +7,7 @@ import { columns } from "./columns";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -14,23 +15,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-async function getData() {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 1100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed522f",
-      amount: 100,
-      status: "pending",
-      email: "m@exaqmple.com",
-    },
-  ];
-}
 
 const Page = () => {
   const [loading, setLoading] = useState(true);
@@ -42,11 +26,10 @@ const Page = () => {
   useEffect(() => {
     dispatch(getAllProperty());
   }, [dispatch]);
-  const data = getData();
 
   return (
     <div className="h-full flex flex-col p-4">
-      <Dialog>
+      <Dialog className="max-h-[calc(100vh-2rem)] overflow-y-auto">
         <DialogTrigger>
           <div className="flex justify-end">
             <Button> Add Property</Button>

@@ -25,3 +25,23 @@ export const getAllProperty = createAsyncThunk(
     }
   }
 );
+
+export const addProperty = createAsyncThunk(
+  "property/addProperty",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/properties/listProperty`,
+        credentials,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      toast.success("User Registered successfully!");
+      return response.data.data;
+    } catch (error) {
+      toast.error("Registration failed!");
+      return rejectWithValue(error.response?.data || "Registration failed");
+    }
+  }
+);

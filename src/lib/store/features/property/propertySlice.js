@@ -1,7 +1,7 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProperty } from "./propertyThunks";
+import { addProperty, getAllProperty } from "./propertyThunks";
 
 const initialState = {
   properties: [],
@@ -26,6 +26,18 @@ const propertySlice = createSlice({
         state.properties = action.payload;
       })
       .addCase(getAllProperty.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      //add property
+      .addCase(addProperty.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addProperty.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(addProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
