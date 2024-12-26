@@ -2,6 +2,10 @@
 import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SiGooglegemini } from "react-icons/si";
+import { CohereClient, CohereError, CohereTimeoutError } from "cohere-ai";
+import { CgSpinner } from "react-icons/cg";
+
 import {
   Form,
   FormControl,
@@ -90,10 +94,50 @@ const AddProperty = ({ open, setOpen }) => {
         formData.append(key, data[key]);
       }
     });
+    console.log("formData", formData);
+    dispatch(addProperty(formData)).then(() => {
+      setOpen(false);
 
-    dispatch(addProperty(formData));
-    dispatch(getAllProperty());
+      dispatch(getAllProperty());
+    });
     console.log(form.formState.errors);
+  };
+
+  const cohere = new CohereClient({
+    token: "AV1BVk7eM9Sf9BTsjQiGynz1DASTLANFmjfsvGUk",
+  });
+  const [description, setDescription] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const generateDescription = () => {
+    setIsEditing(true);
+    (async () => {
+      try {
+        console.log("genetaring chat.....");
+
+        const chat = await cohere.chat({
+          model: "command",
+          message: `Generate a description for a property with the title "${form.getValues(
+            "title"
+          )}" and some besed of these information - "${form.getValues(
+            "description"
+          )}"`,
+        });
+        console.log(chat.text);
+        setIsEditing(false);
+        form.setValue("description", chat.text, { shouldValidate: true });
+      } catch (err) {
+        if (err instanceof CohereTimeoutError) {
+          console.log("Request timed out", err);
+          setIsEditing(false);
+        } else if (err instanceof CohereError) {
+          // catch all errors
+          console.log(err.statusCode);
+          console.log(err.message);
+          console.log(err.body);
+          setIsEditing(false);
+        }
+      }
+    })();
   };
   return (
     <div className="p-4 mx-auto w-full">
@@ -112,7 +156,6 @@ const AddProperty = ({ open, setOpen }) => {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
@@ -120,13 +163,39 @@ const AddProperty = ({ open, setOpen }) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Enter a description" {...field} />
+                  <div className="relative w-full max-w-md">
+                    {/* Textarea */}
+                    <Textarea
+                      className=" pr-16" // Add padding to prevent overlap with the button
+                      placeholder={`${
+                        isEditing
+                          ? "Generating..."
+                          : "Type description text here..."
+                      } `}
+                      {...field}
+                      disabled={isEditing}
+                    />
+
+                    {/* Button */}
+                    <div
+                      className="cursor-pointer absolute bottom-2 right-2 rounded-full h-8 w-8 bg-primary text-white flex items-center justify-center"
+                      size="sm"
+                      onClick={generateDescription}
+                    >
+                      <SiGooglegemini />{" "}
+                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage />
+                {isEditing && (
+                  <div className="text-sm text-gray-500 flex gap-1 items-center">
+                    <CgSpinner className="animate-spin" />
+                    <p>Generating Description...</p>
+                  </div>
+                )}
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="price"
@@ -140,7 +209,92 @@ const AddProperty = ({ open, setOpen }) => {
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder="Location" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />{" "}
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="City" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="divission"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Division</FormLabel>
+                <FormControl>
+                  <Input placeholder="Division" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bedrooms"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bedrooms</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter bedrooms"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bathrooms"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bathrooms</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter bathrooms"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="garage"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Garage</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Enter garage" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="apartmentType"
@@ -148,11 +302,7 @@ const AddProperty = ({ open, setOpen }) => {
               <FormItem>
                 <FormLabel>Apartment Type</FormLabel>
                 <FormControl>
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => field.onChange(value)}
-                    defaultValue={field.value}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <Input
                         value={field.value}
@@ -179,11 +329,7 @@ const AddProperty = ({ open, setOpen }) => {
               <FormItem>
                 <FormLabel>Property Status</FormLabel>
                 <FormControl>
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => field.onChange(value)}
-                    defaultValue={field.value}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <Input
                         value={field.value}

@@ -39,7 +39,7 @@ export function DataTable({ columns, data, setOpen, open }) {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex gap-1 justify-between">
         <Input
           placeholder="Filter Title..."
           value={table.getColumn("title")?.getFilterValue() || ""}
