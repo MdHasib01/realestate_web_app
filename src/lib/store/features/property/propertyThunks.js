@@ -2,6 +2,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 const accessToken =
   typeof window !== "undefined"
     ? window.localStorage.getItem("accessToken")
@@ -25,7 +27,6 @@ export const getAllProperty = createAsyncThunk(
     }
   }
 );
-
 export const addProperty = createAsyncThunk(
   "property/addProperty",
   async (credentials, { rejectWithValue }) => {
@@ -35,13 +36,46 @@ export const addProperty = createAsyncThunk(
         credentials,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
+          "Content-Type": "multipart/form-data",
         }
       );
-      toast.success("User Registered successfully!");
+      toast.success("Property added successfully!");
       return response.data.data;
     } catch (error) {
-      toast.error("Registration failed!");
+      toast.error("Property registration failed!");
+      console.error("Error:", error);
       return rejectWithValue(error.response?.data || "Registration failed");
+    }
+  }
+);
+
+export const deleteProperty = createAsyncThunk(
+  "property/deleteProperty",
+  async (id, { rejectWithValue }) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/properties/${id}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      Swal.fire({
+        title: "Success!",
+        text: "Property deleted successfully!",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+      return response.data.data;
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Property deletion failed!",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      console.error("Error:", error);
+      return rejectWithValue(error.response?.data || "Deletion failed");
     }
   }
 );

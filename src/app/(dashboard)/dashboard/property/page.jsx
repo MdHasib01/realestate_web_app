@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const Page = () => {
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const { loadingProperties, isLoading } = useSelector(
     (state) => state.property
@@ -29,20 +30,29 @@ const Page = () => {
 
   return (
     <div className="h-full flex flex-col p-4">
-      <Dialog className="max-h-[calc(100vh-2rem)] overflow-y-auto">
-        <DialogTrigger>
-          <div className="flex justify-end">
-            <Button> Add Property</Button>
-          </div>
-        </DialogTrigger>
-        <DialogContent>
+      <Dialog
+        onOpenChange={setOpen}
+        open={open}
+        className="max-h-[calc(100vh-2rem)] overflow-y-auto"
+      >
+        <DialogContent
+          className={
+            " overflow-y-scroll max-h-[calc(100vh-2rem)] scrollbar-hide"
+          }
+        >
           <DialogHeader>
             <DialogTitle>Add a new property</DialogTitle>
           </DialogHeader>
-          <AddProperty />
+          <AddProperty open={open} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
-      <DataTable columns={columns} data={properties} className="flex-1" />
+      <DataTable
+        columns={columns}
+        data={properties}
+        open={open}
+        setOpen={setOpen}
+        className="flex-1"
+      />
     </div>
   );
 };

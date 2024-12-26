@@ -22,7 +22,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function DataTable({ columns, data }) {
+export function DataTable({ columns, data, setOpen, open }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const table = useReactTable({
     data,
@@ -47,7 +47,8 @@ export function DataTable({ columns, data }) {
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm mb-4"
-        />
+        />{" "}
+        <Button onClick={() => setOpen(!open)}> Add Property</Button>
       </div>
       <div className="rounded-md border">
         <Table>

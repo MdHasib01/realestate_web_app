@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,22 +22,29 @@ import {
   SelectValue,
   SelectItem,
 } from "../ui/select";
-import { addProperty } from "@/lib/store/features/property/propertyThunks";
+import {
+  addProperty,
+  getAllProperty,
+} from "@/lib/store/features/property/propertyThunks";
 import { useDispatch } from "react-redux";
+import { Textarea } from "../ui/textarea";
 
-const formSchema = z.object({
+const propertySchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
   description: z.string().optional(),
   location: z.string().optional(),
   city: z.string().optional(),
-  division: z.string().optional(),
-  price: z.number().min(1, { message: "Price is required." }),
-  image: z.array(z.string()).optional(),
-  size: z.number().optional(),
-  bedrooms: z.number().optional(),
-  bathrooms: z.number().optional(),
-  garage: z.number().optional(),
-  yearBuilt: z.number().optional(),
+  divission: z.string().optional(),
+  price: z.preprocess(
+    (val) => parseFloat(val),
+    z.number().min(1, { message: "Price is required." })
+  ),
+  image: z.any().optional(),
+  size: z.preprocess((val) => parseFloat(val), z.number().optional()),
+  bedrooms: z.preprocess((val) => parseFloat(val), z.number().optional()),
+  bathrooms: z.preprocess((val) => parseFloat(val), z.number().optional()),
+  garage: z.preprocess((val) => parseFloat(val), z.number().optional()),
+  yearBuilt: z.preprocess((val) => parseFloat(val), z.number().optional()),
   apartmentType: z.enum(["house", "shop", "office", "apartment", "villa"], {
     required_error: "Apartment type is required.",
   }),
@@ -46,64 +53,52 @@ const formSchema = z.object({
   }),
 });
 
-const AddProperty = () => {
+const AddProperty = ({ open, setOpen }) => {
   const dispatch = useDispatch();
+
+  const [previewImage, setPreviewImage] = useState(null);
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(propertySchema),
     defaultValues: {
-      title: "",
       description: "",
       location: "",
       city: "",
-      division: "",
+      divission: "",
       price: 0,
-      image: [],
       size: 0,
       bedrooms: 0,
       bathrooms: 0,
       garage: 0,
-      yearBuilt: 0,
-      apartmentType: "house",
-      propertyStatus: "rent",
+      yearBuilt: new Date().getFullYear(),
     },
   });
-
-  const onSubmit = async (values) => {
-    try {
-      debugger;
-      const result = await dispatch(
-        addProperty({
-          title: values.title,
-          description: values.description,
-          location: values.location,
-          city: values.city,
-          division: values.division,
-          price: values.price,
-          image: values.image,
-          size: values.size,
-          bedrooms: values.bedrooms,
-          bathrooms: values.bathrooms,
-          garage: values.garage,
-          yearBuilt: values.yearBuilt,
-          apartmentType: values.apartmentType,
-          propertyStatus: values.propertyStatus,
-        })
-      );
-      if (result.meta.requestStatus === "fulfilled") {
-        router.push("/properties");
-      }
-    } catch (error) {
-      console.log(error);
+  const handleImageChange = (file) => {
+    if (file) {
+      form.setValue("image", file, { shouldValidate: true });
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewImage(reader.result);
+      reader.readAsDataURL(file);
     }
   };
 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key === "image" && data[key]) {
+        formData.append(key, data[key]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
+
+    dispatch(addProperty(formData));
+    dispatch(getAllProperty());
+    console.log(form.formState.errors);
+  };
   return (
     <div className="p-4 mx-auto w-full">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((values) => onSubmit(values))}
-          className="space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="title"
@@ -111,12 +106,13 @@ const AddProperty = () => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Property Title" {...field} />
+                  <Input placeholder="Enter the property title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="description"
@@ -124,51 +120,13 @@ const AddProperty = () => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input placeholder="Description" {...field} />
+                  <Textarea placeholder="Enter a description" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <FormControl>
-                  <Input placeholder="Location" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="City" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="division"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Division</FormLabel>
-                <FormControl>
-                  <Input placeholder="Division" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <FormField
             control={form.control}
             name="price"
@@ -176,17 +134,13 @@ const AddProperty = () => {
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Price"
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                  />
+                  <Input type="number" placeholder="Enter price" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="apartmentType"
@@ -194,9 +148,16 @@ const AddProperty = () => {
               <FormItem>
                 <FormLabel>Apartment Type</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Apartment Type" />
+                      <Input
+                        value={field.value}
+                        placeholder="Select apartment type"
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="house">House</SelectItem>
@@ -218,9 +179,16 @@ const AddProperty = () => {
               <FormItem>
                 <FormLabel>Property Status</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Property Status" />
+                      <Input
+                        value={field.value}
+                        placeholder="Select property status"
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="rent">Rent</SelectItem>
@@ -233,13 +201,33 @@ const AddProperty = () => {
               </FormItem>
             )}
           />
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <Label htmlFor="terms">Agree to terms</Label>
+          <div>
+            <label>Image</label>
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e.target.files?.[0] || null)}
+              className="file-input"
+            />
+            {previewImage && (
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="mt-2 w-32 h-32 object-cover"
+              />
+            )}
           </div>
-          <Button className="w-full" type="submit">
-            Add Property
-          </Button>
+          <div className="flex gap-2 justify-end">
+            <Button
+              onClick={() => setOpen(false)}
+              className="bg-red-500 hover:bg-red-600"
+            >
+              Cancel
+            </Button>
+            <Button type="submit" className="btn">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
