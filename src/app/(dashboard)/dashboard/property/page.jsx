@@ -29,7 +29,7 @@ const Page = () => {
   }, [dispatch]);
 
   return (
-    <div className="h-full p-4">
+    <div className="p-4">
       <Dialog
         onOpenChange={setOpen}
         open={open}
@@ -46,15 +46,13 @@ const Page = () => {
           <AddProperty open={open} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
-      <div className="w-full h-full ">
-        <DataTable
-          columns={columns}
-          data={properties}
-          open={open}
-          setOpen={setOpen}
-          className="flex-1"
-        />
-      </div>
+
+      <DataTable
+        columns={columns}
+        data={properties}
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   );
 };

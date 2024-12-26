@@ -50,7 +50,7 @@ export function DataTable({ columns, data, setOpen, open }) {
         />{" "}
         <Button onClick={() => setOpen(!open)}> Add Property</Button>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border o">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
