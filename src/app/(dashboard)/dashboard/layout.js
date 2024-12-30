@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }) {
     <SidebarProvider defaultOpen={defaultOpen || true}>
       <AppSidebar />
       <main>
-        <SidebarTrigger className="border p-2 m-2 block md:hidden" />
+        <SidebarTrigger className="border p-2 m-2 " />
         {children}
       </main>
     </SidebarProvider>

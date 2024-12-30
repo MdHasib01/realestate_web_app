@@ -10,34 +10,31 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import React from "react";
-import { IoMdHome } from "react-icons/io";
-
+import { CiGrid41 } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
+import { CiSun } from "react-icons/ci";
+import { CiViewList } from "react-icons/ci";
 const AppSidebar = () => {
   const items = [
     {
       title: "Home",
       url: "/",
-      icon: IoMdHome,
+      icon: CiGrid41,
     },
     {
       title: "Profile",
       url: "/dashboard/profile",
-      icon: IoMdHome,
+      icon: CiUser,
     },
     {
       title: "Property",
       url: "/dashboard/property",
-      icon: IoMdHome,
+      icon: CiViewList,
     },
     {
-      title: "Search",
-      url: "#",
-      icon: IoMdHome,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: IoMdHome,
+      title: "User Management",
+      url: "/dashboard/user_management",
+      icon: CiSun,
     },
   ];
   return (

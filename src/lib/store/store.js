@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./features/auth/authSlice";
 import propertiSlice from "./features/property/propertySlice";
 import favoritesSlice from "./features/favourites/favouritesSlice";
+import userSlice from "./features/user/userSlice";
 import Cookies from "js-cookie";
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     property: propertiSlice,
     favorites: favoritesSlice,
+    users: userSlice,
   },
 });
 store.subscribe(() => {
