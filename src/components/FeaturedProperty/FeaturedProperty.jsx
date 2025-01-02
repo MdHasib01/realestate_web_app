@@ -16,13 +16,11 @@ const FeaturedProperty = () => {
   const [loading, setLoading] = useState(true);
   const { properties, isLoading } = useSelector((state) => state.property);
   const state = useSelector((state) => state);
-  console.log(state);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProperty());
     setLoading(isLoading);
   }, [dispatch]);
-  console.log("pro", properties);
   return (
     <div className=" container px-6 mx-auto lg:px-32 mt-20 ">
       <h1 className="text-md font-bold text-center text-blue-500">Featured</h1>
