@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const AgentCard = () => {
   return (
@@ -20,7 +21,9 @@ const AgentCard = () => {
         molestiae minima odio fugiat corporis fuga recusandae, consequatur non,
         quod voluptas. Eius, aut.
       </p>
-      <Button className="mt-4 w-full">View Profile</Button>
+      <Link className="w-full" href="/agent/john-doe">
+        <Button className="mt-4 w-full">View Profile</Button>
+      </Link>
     </div>
   );
 };
