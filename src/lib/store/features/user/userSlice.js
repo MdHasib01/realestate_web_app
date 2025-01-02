@@ -1,10 +1,11 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUsers } from "./usreThunks";
+import { getAgents, getAllUsers } from "./usreThunks";
 
 const initialState = {
-  users: null,
+  users: [],
+  agents: [],
   isLoading: false,
   error: null,
 };
@@ -26,6 +27,19 @@ const userSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Fetch Agents user cases
+      .addCase(getAgents.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAgents.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.agents = action.payload;
+      })
+      .addCase(getAgents.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

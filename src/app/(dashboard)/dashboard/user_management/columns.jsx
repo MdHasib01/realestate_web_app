@@ -41,7 +41,7 @@ const handleDelete = (id, dispatch) => {
 
 export const columns = [
   {
-    accessorKey: "image",
+    accessorKey: "avatar",
     header: "Image",
     cell: (props) => {
       const image = props.getValue();
@@ -51,14 +51,14 @@ export const columns = [
           width={100}
           height={100}
           alt="property image"
-          src={image[0]}
-          className="w-20 h-12   object-cover"
+          src={image}
+          className="w-20 h-12   object-contain"
         />
       );
     },
   },
   {
-    accessorKey: "userName",
+    accessorKey: "fullName",
     header: "Name",
   },
   {
@@ -72,6 +72,22 @@ export const columns = [
   {
     accessorKey: "role",
     header: "Role",
+    cell: ({ getValue }) => {
+      const roles = [
+        { value: "admin", label: "Admin" },
+        { value: "user", label: "User" },
+        { value: "agent", label: "Agent" },
+      ];
+      return (
+        <select disabled defaultValue={getValue()}>
+          {roles.map((role) => (
+            <option key={role.value} value={role.value}>
+              {role.label}
+            </option>
+          ))}
+        </select>
+      );
+    },
   },
 
   {

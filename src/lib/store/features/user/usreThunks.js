@@ -7,12 +7,30 @@ const accessToken =
     : "";
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
-  async (_, { rejectWithValue }) => {
+  async ({ rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/users/`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
+          params: { role },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Fetch failed");
+    }
+  }
+);
+export const getAgents = createAsyncThunk(
+  "user/getAgents",
+  async ({ rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users?role=agent`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          params: { role },
         }
       );
       return response.data.data;

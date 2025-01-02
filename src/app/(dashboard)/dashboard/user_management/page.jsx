@@ -50,12 +50,7 @@ const Page = () => {
         </DialogContent>
       </Dialog>
 
-      <DataTable
-        columns={columns}
-        data={properties}
-        open={open}
-        setOpen={setOpen}
-      />
+      <DataTable columns={columns} data={users} open={open} setOpen={setOpen} />
     </div>
   );
 };
