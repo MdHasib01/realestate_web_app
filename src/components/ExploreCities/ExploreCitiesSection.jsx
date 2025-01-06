@@ -1,5 +1,6 @@
 import React from "react";
 import CItyCard from "./CItyCard";
+import Link from "next/link";
 
 const cities = [
   {
@@ -39,7 +40,9 @@ const ExploreCitiesSection = () => {
           </p>
         </div>
         {cities.map((city) => (
-          <CItyCard key={city.id} city={city} />
+          <Link href={`/city/${city.name}`}>
+            <CItyCard key={city.id} city={city} />
+          </Link>
         ))}
       </div>
     </div>
