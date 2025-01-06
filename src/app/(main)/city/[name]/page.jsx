@@ -17,12 +17,17 @@ const page = ({ params }) => {
   const properties = useSelector((state) => state.property.properties);
   console.log(properties);
   const dispatch = useDispatch();
+  const searchParams = {
+    search: "villa",
+    city: "Jashore",
+    divission: params?.name,
+  };
   useEffect(() => {
-    dispatch(getQueryProperty("villa", "Jashore", params.name));
+    dispatch(getQueryProperty(searchParams));
   }, [dispatch]);
   return (
     <div>
-      <div className="sticky top-0">
+      <div className="sticky top-0 overflow-hidden  z-50 w-full">
         <CitySearch />
       </div>
       <div className="container-main">

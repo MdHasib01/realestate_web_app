@@ -25,7 +25,7 @@ const CitySearch = () => {
       </div>
       <Select className="col-span-1 bg-white">
         <SelectTrigger className="w-full bg-white">
-          <SelectValue placeholder="Theme" />
+          <SelectValue placeholder="City" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="light">Light</SelectItem>
@@ -35,7 +35,7 @@ const CitySearch = () => {
       </Select>
       <Select className="col-span-1 bg-white">
         <SelectTrigger className="w-full bg-white">
-          <SelectValue placeholder="Theme" />
+          <SelectValue placeholder="Type" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="light">Light</SelectItem>
