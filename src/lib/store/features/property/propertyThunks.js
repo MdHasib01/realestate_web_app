@@ -27,6 +27,24 @@ export const getAllProperty = createAsyncThunk(
     }
   }
 );
+// Fetch current user thunk
+export const getQueryProperty = createAsyncThunk(
+  "property/getFilteredProperty",
+  async ({ search, city, divission }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/properties/properties?name=${search}&city=${city}&divission=${divission}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      NextResponse.redirect(homeUrl);
+      return rejectWithValue(error.response?.data || "Fetch failed");
+    }
+  }
+);
 export const addProperty = createAsyncThunk(
   "property/addProperty",
   async (credentials, { rejectWithValue }) => {

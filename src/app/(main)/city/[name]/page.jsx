@@ -1,4 +1,6 @@
+"use client";
 import CitySearch from "@/components/City/CitySearch";
+import PropertyCard from "@/components/FeaturedProperty/PropertyCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,9 +8,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getQueryProperty } from "@/lib/store/features/property/propertyThunks";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const page = ({ params }) => {
+  const properties = useSelector((state) => state.property.properties);
+  console.log(properties);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getQueryProperty("villa", "Jashore", params.name));
+  }, [dispatch]);
   return (
     <div>
       <div className="sticky top-0">
@@ -29,8 +40,8 @@ const page = ({ params }) => {
         <h2 className="text-3xl font-bold">{params?.name}</h2>
         <div className="grid gird-cols-1 md:grid-cols-3 gap-4">
           <div className="grid md:col-span-2 grid-cols-1 md:grid-cols-2 gap-4">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div className="w-full h-[300px] bg-gray-300"> property</div>
+            {properties.map((item) => (
+              <PropertyCard property={item} />
             ))}
           </div>
           <div className="col-span-1 bg-white rounded"></div>

@@ -1,7 +1,11 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { addProperty, getAllProperty } from "./propertyThunks";
+import {
+  addProperty,
+  getAllProperty,
+  getQueryProperty,
+} from "./propertyThunks";
 
 const initialState = {
   properties: [],
@@ -16,7 +20,7 @@ const propertySlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // Fetch current user cases
+      // Fetch all property
       .addCase(getAllProperty.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -26,6 +30,19 @@ const propertySlice = createSlice({
         state.properties = action.payload;
       })
       .addCase(getAllProperty.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Fetch query property
+      .addCase(getQueryProperty.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getQueryProperty.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.properties = action.payload;
+      })
+      .addCase(getQueryProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

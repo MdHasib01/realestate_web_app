@@ -1,7 +1,5 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
 import AgentCard from "./AgentCard";
 import {
   Carousel,
