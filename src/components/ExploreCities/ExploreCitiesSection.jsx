@@ -29,7 +29,7 @@ const cities = [
 ];
 const ExploreCitiesSection = () => {
   return (
-    <div className="container-main">
+    <div className="container-main my-8">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="flex flex-col justify-center">
           <h3 className="font-semibold text-2xl mb-4">Explore cities</h3>
