@@ -16,7 +16,7 @@ import Autoplay from "embla-carousel-autoplay";
 const Agents = () => {
   const [loading, isLoading] = useState(false);
   return (
-    <div className=" container px-6 mx-auto lg:px-32 mt-20 ">
+    <div className=" container-main ">
       <div className="flex flex-col justify-center items-center">
         <h2 className="text-3xl font-bold">Meet Out Agents</h2>
         <p className="text-gray-500 mb-10 mt-4">

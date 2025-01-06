@@ -22,7 +22,7 @@ const FeaturedProperty = () => {
     setLoading(isLoading);
   }, [dispatch]);
   return (
-    <div className=" container px-6 mx-auto lg:px-32 mt-20 ">
+    <div className=" container-main ">
       <h1 className="text-md font-bold text-center text-blue-500">Featured</h1>
       <h1 className="text-2xl font-bold text-center uppercase ">Properties</h1>
       <p className="text-center text-gray-500 mb-4">

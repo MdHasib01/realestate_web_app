@@ -76,7 +76,7 @@ const RegisterContainer = () => {
     }
   };
   return (
-    <div className="container px-2 mx-auto lg:px-32  flex items-center justify-center h-screen max-w-6xl ">
+    <div className="container-main  flex items-center justify-center h-screen max-w-6xl ">
       <div className="md:grid md:grid-cols-7 my-10 w-full drop-shadow shadow-xl items-center justify-center rounded">
         <Image
           src={loginImg}

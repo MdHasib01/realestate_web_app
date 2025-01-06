@@ -14,7 +14,7 @@ import Autoplay from "embla-carousel-autoplay";
 const Brand = () => {
   return (
     <div className="bg-white py-10 mt-10">
-      <div className="container px-6 mx-auto lg:px-32 ">
+      <div className="container-main ">
         <Carousel
           options={{ loop: true, skipSnaps: false }}
           plugins={[

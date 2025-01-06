@@ -17,7 +17,7 @@ const PropertyDetails = async ({ params }) => {
   console.log(data);
   console.log(params.propertyId);
   return (
-    <div className="container lg:px-32 px-2 mx-auto">
+    <div className="container-main">
       <div className="hidden md:block">
         <TopDetails property={data.data} />
       </div>

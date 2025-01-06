@@ -1,5 +1,6 @@
 import StoreProvider from "@/StoreProvider";
 import "./globals.css";
+import "aos/dist/aos.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Damion, Roboto } from "@next/font/google";

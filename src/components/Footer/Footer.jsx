@@ -19,7 +19,7 @@ const damion = Damion({
 const Footer = () => {
   return (
     <div className="w-full bg-[#004274] text-white">
-      <div className="container mx-auto lg:px-32 px-6 pt-12 pb-4 grid grid-cols-1 md:grid-cols-4">
+      <div className="container-main pt-12 pb-4 grid grid-cols-1 md:grid-cols-4">
         <div className="mb-6">
           <h1 className="mb-6">Discover</h1>
           <ul>

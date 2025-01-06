@@ -16,7 +16,7 @@ const page = () => {
     setLoading(isLoading);
   }, [dispatch]);
   return (
-    <div className=" container px-4 mx-auto lg:px-32 max-w-7xl mt-20 ">
+    <div className=" container-main ">
       <div className="grid gap-2 grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded my-4">
         <Image
           width={400}
