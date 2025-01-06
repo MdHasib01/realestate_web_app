@@ -30,14 +30,14 @@ export const getAllProperty = createAsyncThunk(
 // Fetch current user thunk
 export const getQueryProperty = createAsyncThunk(
   "property/getFilteredProperty",
-  async ({ search, city, divission }, { rejectWithValue }) => {
+  async ({ search, city, divission, type, status }, { rejectWithValue }) => {
     console.log("search-param", search, city, divission);
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/properties`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
-          params: { name: search, city, divission },
+          params: { name: search, city, divissionm, type, status },
         }
       );
       return response.data.data;

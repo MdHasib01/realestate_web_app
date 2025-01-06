@@ -11,12 +11,27 @@ const initialState = {
   properties: [],
   isLoading: false,
   error: null,
+  type: "",
+  status: "",
+  city: "",
+  divission: "",
+  search: "",
 };
 
 const propertySlice = createSlice({
   name: "property",
   initialState,
-  reducers: {},
+  reducers: {
+    setType: (state, action) => {
+      state.type = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
+    setCity: (state, action) => {
+      state.city = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -60,5 +75,5 @@ const propertySlice = createSlice({
       });
   },
 });
-
+export const { setType, setStatus, setCity } = propertySlice.actions;
 export default propertySlice.reducer;

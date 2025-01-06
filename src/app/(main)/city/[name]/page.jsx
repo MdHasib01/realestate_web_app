@@ -10,14 +10,18 @@ import {
 } from "@/components/ui/breadcrumb";
 import { getQueryProperty } from "@/lib/store/features/property/propertyThunks";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const page = ({ params }) => {
   const properties = useSelector((state) => state.property.properties);
   console.log(properties);
   const dispatch = useDispatch();
+  const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
   const searchParams = {
+    type,
+    status,
     search: "villa",
     city: "Jashore",
     divission: params?.name,
@@ -28,7 +32,7 @@ const page = ({ params }) => {
   return (
     <div>
       <div className="sticky top-0 overflow-hidden  z-50 w-full">
-        <CitySearch />
+        <CitySearch division={params?.name} type={type} setType={setType} />
       </div>
       <div className="container-main">
         <Breadcrumb>
