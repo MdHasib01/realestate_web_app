@@ -12,6 +12,12 @@ import Autoplay from "embla-carousel-autoplay";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProperty } from "@/lib/store/features/property/propertyThunks";
 import { Skeleton } from "../ui/skeleton";
+import {
+  setCity,
+  setSearch,
+  setStatus,
+  setType,
+} from "@/lib/store/features/property/propertySlice";
 const FeaturedProperty = () => {
   const [loading, setLoading] = useState(true);
   const { properties, isLoading } = useSelector((state) => state.property);
@@ -19,6 +25,10 @@ const FeaturedProperty = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProperty());
+    dispatch(setSearch(""));
+    dispatch(setCity(""));
+    dispatch(setStatus(""));
+    dispatch(setType(""));
     setLoading(isLoading);
   }, [dispatch]);
   return (
