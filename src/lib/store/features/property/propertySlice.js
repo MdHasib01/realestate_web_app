@@ -31,6 +31,9 @@ const propertySlice = createSlice({
     setCity: (state, action) => {
       state.city = action.payload;
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,5 +78,5 @@ const propertySlice = createSlice({
       });
   },
 });
-export const { setType, setStatus, setCity } = propertySlice.actions;
+export const { setType, setStatus, setCity, setSearch } = propertySlice.actions;
 export default propertySlice.reducer;

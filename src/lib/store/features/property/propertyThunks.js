@@ -31,13 +31,13 @@ export const getAllProperty = createAsyncThunk(
 export const getQueryProperty = createAsyncThunk(
   "property/getFilteredProperty",
   async ({ search, city, divission, type, status }, { rejectWithValue }) => {
-    console.log("search-param", search, city, divission);
+    console.log("search-param", search, city, divission, type, status);
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/properties`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
-          params: { name: search, city, divissionm, type, status },
+          params: { name: search, city, divission, type, status },
         }
       );
       return response.data.data;

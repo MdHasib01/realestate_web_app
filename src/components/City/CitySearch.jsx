@@ -12,15 +12,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getQueryProperty } from "@/lib/store/features/property/propertyThunks";
 import { useDispatch, useSelector } from "react-redux";
-import { setType } from "@/lib/store/features/property/propertySlice";
-const CitySearch = ({ division }) => {
+import {
+  setCity,
+  setSearch,
+  setStatus,
+  setType,
+} from "@/lib/store/features/property/propertySlice";
+
+import cities from "../../../public/explore/city.json";
+const CitySearch = ({ division, setLoading }) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.property);
+  const { type, status, search, city, isLoading } = useSelector(
+    (state) => state.property
+  );
   const searchParams = {
-    typ: state.type,
-    status: state.status,
-    search: "villa",
-    city: "Jashore",
+    type,
+    status,
+    search,
+    city,
     divission: division,
   };
 
@@ -34,23 +43,29 @@ const CitySearch = ({ division }) => {
             className=" w-full bg-white"
             placeholder="Enter Keyword..."
             style={{ paddingLeft: "2.5rem" }}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
           />
         </div>
       </div>
-      <Select className="col-span-1 bg-white">
+      <Select
+        className="col-span-1 bg-white"
+        onValueChange={(value) => dispatch(setCity(value))}
+      >
         <SelectTrigger className="w-full bg-white">
           <SelectValue placeholder="City" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light">Light</SelectItem>
-          <SelectItem value="dark">Dark</SelectItem>
-          <SelectItem value="system">System</SelectItem>
+          {cities[division]?.map((city) => (
+            <SelectItem key={city} value={city}>
+              {city}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Select
         className="col-span-1 bg-white"
         onValueChange={(value) => {
-          dispatch(setType(value));
+          dispatch(setStatus(value));
         }}
       >
         <SelectTrigger className="w-full bg-white">
@@ -64,7 +79,10 @@ const CitySearch = ({ division }) => {
       </Select>
       <Button
         className="col-span-1 bg-blue-500 hover:bg-blue-600"
-        onClick={() => dispatch(getQueryProperty(searchParams))}
+        onClick={() => {
+          dispatch(getQueryProperty(searchParams));
+          setLoading(isLoading);
+        }}
       >
         Search
       </Button>
