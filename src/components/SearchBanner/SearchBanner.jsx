@@ -1,19 +1,71 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Reveal from "../ui/Motion/Reveal";
-
+import cities from "../../../public/explore/city.json";
+import { useDispatch } from "react-redux";
+import {
+  setCity,
+  setDivision,
+  setStatus,
+  setType,
+} from "@/lib/store/features/property/propertySlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useRouter } from "next/navigation";
 const SearchBanner = () => {
+  const dispatch = useDispatch();
+  const [selectDivision, setSelectDivision] = useState("");
+  const allDivission = Object.keys(cities);
+  const allCities = Object.values(cities).flat();
+  const appartmentType = ["house", "shop", "office", "apartment", "villa"];
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const router = useRouter();
   return (
     <>
       <div className="bg-white-100 flex items-center justify-center mx-auto rounded-md px-2 lg:px-32 drop-shadow">
-        <button className="bg-blue-500 bg-opacity-80 text-white px-4 py-2 font-bold hover:bg-blue-500 hover:bg-opacity-80 rounded-t-md hover:text-white mr-1">
-          All Status
-        </button>
-        <button className="bg-white px-4 py-2 font-bold hover:bg-blue-500 hover:bg-opacity-80 rounded-t-md hover:text-white mr-1">
+        <button
+          className={`${
+            selectedStatus === "sell"
+              ? "bg-white text-black"
+              : "bg-blue-500 bg-opacity-80 text-white"
+          }   px-4 py-2 font-bold  rounded-t-md  mr-1`}
+          onClick={() => {
+            setSelectedStatus("sell");
+            setStatus("sell");
+          }}
+        >
           For Sell
         </button>
-        <button className="bg-white px-4 py-2  font-bold hover:bg-blue-500 hover:bg-opacity-80 rounded-t-md hover:text-white ">
+        <button
+          className={`${
+            selectedStatus === ""
+              ? "bg-white text-black"
+              : "bg-blue-500 bg-opacity-80 text-white"
+          }   px-4 py-2 font-bold  rounded-t-md  mr-1`}
+          onClick={() => {
+            setSelectedStatus("");
+          }}
+        >
+          All Status
+        </button>
+        <button
+          className={`${
+            selectedStatus === "rent"
+              ? "bg-white text-black"
+              : "bg-blue-500 bg-opacity-80 text-white"
+          }   px-4 py-2 font-bold  rounded-t-md  mr-1`}
+          onClick={() => {
+            setSelectedStatus("rent");
+            setStatus("rent");
+          }}
+        >
           For Rent
         </button>
       </div>
@@ -22,22 +74,69 @@ const SearchBanner = () => {
           <Reveal>
             <label className="uppercase text-sm">Looking For</label>
           </Reveal>
-          <Input
-            className="border-slate-400"
-            placeholder="Property Type"
-          ></Input>
+          <Select
+            className="col-span-1 bg-white"
+            onValueChange={(value) => {
+              dispatch(setType(value));
+            }}
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Type" />
+            </SelectTrigger>
+            <SelectContent>
+              {appartmentType.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div>
           <Reveal>
-            <label className="uppercase text-sm">Location</label>
+            <label className="uppercase text-sm">Division</label>
           </Reveal>
-          <Input className="border-slate-400" placeholder="All cities"></Input>
+          <Select
+            className="col-span-1 bg-white"
+            onValueChange={(value) => {
+              dispatch(setDivision(value));
+              setSelectDivision(value);
+            }}
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Division" />
+            </SelectTrigger>
+            <SelectContent>
+              {allDivission?.map((city) => (
+                <SelectItem key={city} value={city}>
+                  {city}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
+
         <div>
           <Reveal>
-            <label className="uppercase text-sm">Property size</label>
+            <label className="uppercase text-sm">City</label>
           </Reveal>
-          <Input className="border-slate-400" placeholder="Bedrooms"></Input>
+          <Select
+            className="col-span-1 bg-white"
+            onValueChange={(value) => dispatch(setCity(value))}
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="City" />
+            </SelectTrigger>
+            <SelectContent>
+              {(selectDivision === "" ? allCities : cities[selectDivision]).map(
+                (city) => (
+                  <SelectItem key={city} value={city}>
+                    {city}
+                  </SelectItem>
+                )
+              )}
+            </SelectContent>
+          </Select>
         </div>
         <div>
           <Reveal>
@@ -45,9 +144,13 @@ const SearchBanner = () => {
           </Reveal>
           <Input className="border-slate-400" placeholder="Max. Price"></Input>
         </div>
-
         <div className="flex items-end">
-          <Button className="w-full uppercase">Search</Button>
+          <Button
+            className="w-full uppercase"
+            onClick={() => router.push("/search_result")}
+          >
+            Search
+          </Button>
         </div>
       </div>
     </>

@@ -34,8 +34,8 @@ const CitySearch = ({ division, setLoading }) => {
   };
 
   return (
-    <div className="bg-blue-900 container-main p-4 grid grid-cols-8 gap-2">
-      <div className="col-span-5">
+    <div className="bg-blue-900 container-main p-4 grid md:grid-cols-8 gap-2">
+      <div className="md:col-span-5">
         <div className="relative">
           <CiSearch className="absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
@@ -47,45 +47,47 @@ const CitySearch = ({ division, setLoading }) => {
           />
         </div>
       </div>
-      <Select
-        className="col-span-1 bg-white"
-        onValueChange={(value) => dispatch(setCity(value))}
-      >
-        <SelectTrigger className="w-full bg-white">
-          <SelectValue placeholder="City" />
-        </SelectTrigger>
-        <SelectContent>
-          {cities[division]?.map((city) => (
-            <SelectItem key={city} value={city}>
-              {city}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Select
-        className="col-span-1 bg-white"
-        onValueChange={(value) => {
-          dispatch(setStatus(value));
-        }}
-      >
-        <SelectTrigger className="w-full bg-white">
-          <SelectValue placeholder="Type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="rent">Rent</SelectItem>
-          <SelectItem value="sale">Sale</SelectItem>
-          <SelectItem value="sold">Sold</SelectItem>
-        </SelectContent>
-      </Select>
-      <Button
-        className="col-span-1 bg-blue-500 hover:bg-blue-600"
-        onClick={() => {
-          dispatch(getQueryProperty(searchParams));
-          setLoading(isLoading);
-        }}
-      >
-        Search
-      </Button>
+      <div className="md:col-span-3 grid grid-cols-3 gap-2">
+        <Select
+          className="bg-white"
+          onValueChange={(value) => dispatch(setCity(value))}
+        >
+          <SelectTrigger className="w-full bg-white">
+            <SelectValue placeholder="City" />
+          </SelectTrigger>
+          <SelectContent>
+            {cities[division]?.map((city) => (
+              <SelectItem key={city} value={city}>
+                {city}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          className="bg-white"
+          onValueChange={(value) => {
+            dispatch(setStatus(value));
+          }}
+        >
+          <SelectTrigger className="w-full bg-white">
+            <SelectValue placeholder="Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="rent">Rent</SelectItem>
+            <SelectItem value="sale">Sale</SelectItem>
+            <SelectItem value="sold">Sold</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button
+          className="bg-blue-500 hover:bg-blue-600"
+          onClick={() => {
+            dispatch(getQueryProperty(searchParams));
+            setLoading(isLoading);
+          }}
+        >
+          Search
+        </Button>
+      </div>
     </div>
   );
 };

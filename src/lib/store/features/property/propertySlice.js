@@ -34,6 +34,9 @@ const propertySlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+    setDivision: (state, action) => {
+      state.divission = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -78,5 +81,6 @@ const propertySlice = createSlice({
       });
   },
 });
-export const { setType, setStatus, setCity, setSearch } = propertySlice.actions;
+export const { setType, setStatus, setCity, setSearch, setDivision } =
+  propertySlice.actions;
 export default propertySlice.reducer;
