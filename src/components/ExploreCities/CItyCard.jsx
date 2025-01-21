@@ -9,7 +9,7 @@ const CItyCard = ({ city }) => {
   return (
     <div
       className={` h-[350px] md:h-[500px] ${city.image} bg-cover bg-center rounded cursor-pointer`}
-      data-aos="fade-left"
+      data-aos="fade-up"
     >
       <div className="p-4 h-full text-white flex flex-col justify-between h-full bg-black bg-opacity-30 hover:bg-opacity-0 duration-300 rounded">
         <div>

@@ -69,18 +69,18 @@ const SearchBanner = () => {
           For Rent
         </button>
       </div>
-      <div className="search bg-white p-8  rounded-md mx-2 md:mx-32 drop-shadow-2xl grid grid-cols-1 gap-4 md:grid-cols-5">
+      <div className="search bg-white p-8 rounded-md mx-2 md:mx-32 drop-shadow-2xl grid grid-cols-1 gap-4 md:grid-cols-5">
         <div>
           <Reveal>
             <label className="uppercase text-sm">Looking For</label>
           </Reveal>
           <Select
-            className="col-span-1 bg-white"
+            className="bg-white "
             onValueChange={(value) => {
               dispatch(setType(value));
             }}
           >
-            <SelectTrigger className="w-full bg-white">
+            <SelectTrigger className=" bg-white">
               <SelectValue placeholder="Type" />
             </SelectTrigger>
             <SelectContent>
