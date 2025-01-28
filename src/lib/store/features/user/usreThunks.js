@@ -7,13 +7,13 @@ const accessToken =
     : "";
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
+    debugger;
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/users/`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
-          params: { role },
         }
       );
       return response.data.data;
@@ -24,7 +24,7 @@ export const getAllUsers = createAsyncThunk(
 );
 export const getAgents = createAsyncThunk(
   "user/getAgents",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/users?role=agent`,

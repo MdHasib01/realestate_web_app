@@ -24,6 +24,7 @@ const Page = () => {
     (state) => state.property
   );
   const { users } = useSelector((state) => state.users);
+  console.log("users", users);
   const properties = useSelector((state) => state.property.properties);
   const dispatch = useDispatch();
   useEffect(() => {
