@@ -41,3 +41,19 @@ export const getVerifiedAgents = createAsyncThunk(
     }
   }
 );
+export const getAgentDetails = createAsyncThunk(
+  "agent/getAgentDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/agent/${id}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Fetch failed");
+    }
+  }
+);

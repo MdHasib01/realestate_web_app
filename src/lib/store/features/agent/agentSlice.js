@@ -1,9 +1,14 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllAgents, getVerifiedAgents } from "./agentThunks";
+import {
+  getAgentDetails,
+  getAllAgents,
+  getVerifiedAgents,
+} from "./agentThunks";
 
 const initialState = {
+  agent: {},
   allAgents: [],
   verifiedAgents: [],
   pendingAgents: [],
@@ -37,6 +42,17 @@ const agentSlice = createSlice({
         state.verifiedAgents = action.payload;
       })
       .addCase(getVerifiedAgents.rejected, (state) => {
+        state.isLoading = false;
+      })
+      // fetch agent details
+      .addCase(getAgentDetails.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAgentDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.agent = action.payload;
+      })
+      .addCase(getAgentDetails.rejected, (state) => {
         state.isLoading = false;
       });
 
