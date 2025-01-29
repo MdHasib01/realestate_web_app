@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AgentCard from "./AgentCard";
 import {
   Carousel,
@@ -10,9 +10,25 @@ import {
 } from "../ui/featuredCarousel";
 import { Skeleton } from "../ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllAgents,
+  getVerifiedAgents,
+} from "@/lib/store/features/agent/agentThunks";
 
 const Agents = () => {
   const [loading, isLoading] = useState(false);
+  const dispatch = useDispatch();
+  const agents = useSelector((state) => state.agent.verifiedAgents);
+  useEffect(() => {
+    isLoading(true);
+    dispatch(getVerifiedAgents())
+      .unwrap()
+      .then(() => {
+        isLoading(false);
+      });
+  }, [dispatch]);
+
   return (
     <div className=" container-main ">
       <div className="flex flex-col justify-center items-center">
@@ -33,8 +49,8 @@ const Agents = () => {
       >
         <CarouselContent>
           {loading &&
-            [1, 2, 3, 4, 5, 6].map((item) => (
-              <CarouselItem className="md:basis-1/3 lg:basis-1/4">
+            agents.map((_, index) => (
+              <CarouselItem className="md:basis-1/3 lg:basis-1/4" key={index}>
                 <div className=" flex flex-col justify-center items-center space-y-2">
                   <Skeleton className=" w-32 h-32 p-6 rounded-full" />
                   <Skeleton className="h-4 w-1/2" />
@@ -47,9 +63,9 @@ const Agents = () => {
               </CarouselItem>
             ))}
           {!loading &&
-            [1, 2, 3, 4, 5, 6].map((index) => (
+            agents.map((agent, index) => (
               <CarouselItem className="md:basis-1/3 lg:basis-1/4" key={index}>
-                <AgentCard />
+                <AgentCard agent={agent} />
               </CarouselItem>
             ))}
         </CarouselContent>

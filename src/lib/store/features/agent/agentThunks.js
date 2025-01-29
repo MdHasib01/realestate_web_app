@@ -1,16 +1,19 @@
 "use client";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const accessToken =
   typeof window !== "undefined"
     ? window.localStorage.getItem("accessToken")
     : "";
-export const getAllUsers = createAsyncThunk(
-  "user/getAllUsers",
+
+export const getAllAgents = createAsyncThunk(
+  "agent/getAllAgents",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/agent/`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -21,15 +24,15 @@ export const getAllUsers = createAsyncThunk(
     }
   }
 );
-export const getAgents = createAsyncThunk(
-  "user/getAgents",
+
+export const getVerifiedAgents = createAsyncThunk(
+  "agent/getVerifiedAgents",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/users?role=agent`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/agent?status=verified`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
-          params: { role },
         }
       );
       return response.data.data;
