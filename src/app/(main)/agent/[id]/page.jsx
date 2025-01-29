@@ -33,8 +33,7 @@ const page = () => {
     userID,
     bio,
     licenseNumber,
-    phone,
-    email,
+
     yearsOfExperience,
     officeAddress,
   } = agent.agent;
@@ -100,11 +99,11 @@ const page = () => {
               <tbody>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Phone</td>
-                  <td className="py-2 px-4">{phone}</td>
+                  <td className="py-2 px-4">{userID?.phone}</td>
                 </tr>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Email</td>
-                  <td className="py-2 px-4">{email}</td>
+                  <td className="py-2 px-4">{userID?.email}</td>
                 </tr>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Office</td>
