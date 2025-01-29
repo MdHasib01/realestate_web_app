@@ -28,8 +28,16 @@ const page = () => {
     setLoading(isLoading);
     setDetailsLoading(agent.isLoading);
   }, [dispatch, id]);
-  const { _id, userID, bio, licenseNumber, yearsOfExperience, officeAddress } =
-    agent.agent;
+  const {
+    _id,
+    userID,
+    bio,
+    licenseNumber,
+    phone,
+    email,
+    yearsOfExperience,
+    officeAddress,
+  } = agent.agent;
 
   if (detailsLoading) {
     return (
@@ -92,15 +100,15 @@ const page = () => {
               <tbody>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Phone</td>
-                  <td className="py-2 px-4">+1234567890</td>
+                  <td className="py-2 px-4">{phone}</td>
                 </tr>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Email</td>
-                  <td className="py-2 px-4">john@example.com</td>
+                  <td className="py-2 px-4">{email}</td>
                 </tr>
                 <tr className="border-b border-gray-200">
                   <td className="py-2 px-4 font-bold">Office</td>
-                  <td className="py-2 px-4">123 234</td>
+                  <td className="py-2 px-4">+8801234-123456</td>
                 </tr>
               </tbody>
             </table>
