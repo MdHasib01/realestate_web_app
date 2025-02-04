@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CiCircleAlert, CiMail, CiPhone } from "react-icons/ci";
 import { FaPhoneAlt } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
+import { RxAvatar } from "react-icons/rx";
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
@@ -25,11 +26,15 @@ const ProfilePage = () => {
   return (
     <div className=" px-8">
       <div className="grid gap-2 grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded my-4">
-        <img
-          src={user?.avatar}
-          alt="profile"
-          className="w-full md:col-span-1 border rounded"
-        />
+        {user?.avatar ? (
+          <img
+            src={user?.avatar}
+            alt="profile"
+            className="w-full md:col-span-1 border rounded"
+          />
+        ) : (
+          <RxAvatar className="rounded-full w-48 h-48" />
+        )}
         <div className="md:col-span-2">
           <p className="text-sm text-gray-500 mb-2">Profile</p>
           <hr />
