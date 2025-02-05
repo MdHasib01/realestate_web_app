@@ -38,3 +38,16 @@ export const getAgents = createAsyncThunk(
     }
   }
 );
+export const isAgent = createAsyncThunk(
+  "user/isAgent",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/agent/isApplied/${id}`
+      );
+      return response.data.data; // Expected: { user, token }
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Application failed");
+    }
+  }
+);

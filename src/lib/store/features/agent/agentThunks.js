@@ -57,3 +57,21 @@ export const getAgentDetails = createAsyncThunk(
     }
   }
 );
+export const applyAgent = createAsyncThunk(
+  "agent/applyAgent",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/agent`,
+        payload
+      );
+
+      toast.success("Agent application successfull!");
+      return response.data.data; // Expected: { user, token }
+    } catch (error) {
+      toast.error("Application failed!");
+      return rejectWithValue(error.response?.data || "Application failed");
+    }
+  }
+);
+
