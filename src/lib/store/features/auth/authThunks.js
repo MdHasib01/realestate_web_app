@@ -1,6 +1,7 @@
 "use client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { NextResponse } from "next/server";
 import { toast } from "react-toastify";
 const accessToken =
@@ -49,19 +50,24 @@ export const register = createAsyncThunk(
 export const fetchCurrentUser = createAsyncThunk(
   "auth/fetchCurrentUser",
   async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/current-user`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
+    if (accessToken) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/users/current-user`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
 
-      return response.data.data; // Expected: { user }
-    } catch (error) {
-      const homeUrl = new URL("/", request.url);
-      NextResponse.redirect(homeUrl);
-      return rejectWithValue(error.response?.data || "Fetch failed");
+        return response.data.success; // Expected: { user }
+      } catch (error) {
+        window.localStorage.removeItem("user");
+        window.localStorage.removeItem("accessToken");
+        Cookies.remove("accessToken");
+        const homeUrl = new URL("/", request.url);
+        NextResponse.redirect(homeUrl);
+        return rejectWithValue(error.response?.data || "Fetch failed");
+      }
     }
   }
 );
