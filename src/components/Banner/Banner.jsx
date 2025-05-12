@@ -23,7 +23,7 @@ const Banner = () => {
             </h2>
           </Reveal>
 
-          <div className="text-xl text-center text-white">
+          <div className="text-xl text-center max-w-3xl mx-auto text-white">
             Houzez is an innovative real estate web application that provides a
             user-friendly platform for buying, selling, and renting properties.
           </div>
